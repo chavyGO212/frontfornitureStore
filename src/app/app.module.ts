@@ -24,6 +24,7 @@ import { FooterComponent } from './footer/footer.component';
 import { StockComponent } from './stock/stock.component';
 import { ManageShopingCartComponent } from './manage-shoping-cart/manage-shoping-cart.component';
 import { ManageClientsComponent } from './manage-clients/manage-clients.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -52,9 +53,12 @@ import { ManageClientsComponent } from './manage-clients/manage-clients.componen
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { 
+  
+}

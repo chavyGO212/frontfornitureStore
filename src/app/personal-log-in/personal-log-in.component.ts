@@ -6,5 +6,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./personal-log-in.component.css']
 })
 export class PersonalLogInComponent {
-
+  user={
+    firstName:'',
+    lastName:'',
+    phone: '',
+    email:'',
+    //need to add payments
+ //need to add orders
+   
+  }
 }

@@ -2,7 +2,7 @@
 <body>
     <div class="container">
         <h2>יצירת חשבון</h2>
-        <form class="account-form" [formGroup]="registrationForm">
+        <form class="account-form" [formGroup]="registrationForm" (ngSubmit)="register()">
             <label for="email">כתובת אימייל</label>
             <input type="email" id="email" name="email" formControlName="email" required>
 
@@ -21,7 +21,7 @@
             <label for="password">סיסמה (חייב לכלול לפחות 8 תווים)</label>
             <input type="password" id="password" name="password" minlength="8" formControlName="password" required>
 
-            <button type="submit" (click)="register()">צור חשבון</button>
+            <button type="submit" >צור חשבון</button>
         </form>
     </div>
 </body>

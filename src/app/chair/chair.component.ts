@@ -6,5 +6,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./chair.component.css']
 })
 export class ChairComponent {
-
+  chair={
+    productName: '',
+    description: '',
+    descriptionFull: '',
+    color: '', //color type
+    price: 0, //number typy
+    promotion: '', //?needed
+    stock: ''//? needed
+  }
 }

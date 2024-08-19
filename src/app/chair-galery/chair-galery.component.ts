@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./chair-galery.component.css']
 })
 export class ChairGaleryComponent {
-  
+  gallery= []
 }

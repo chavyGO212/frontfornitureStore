@@ -31,13 +31,21 @@ export class RegisterComponent  {
   }
   // פונקציה להירשם שתבוצע בלחיצה על הכפתור
   register() {
-    console.log('Customer registered:', this.registrationForm.value);
-    this.subscription.add(this.registerService.register(this.registrationForm.value).subscribe(response => {
-      console.log('Registration successful', response);
-    }, error => {
-      console.error('Registration failed', error);
-    })
-  )
-  }
+    console.log('Attempting to register customer with data:', this.registrationForm.value);
+    if (this.registrationForm.valid) {
+        console.log('Form data being sent:', this.registrationForm.value); // Additional log before the HTTP request
+        this.subscription.add(this.registerService.register(this.registrationForm.value).subscribe(
+            response => {
+                console.log('Registration successful', response);
+            },
+            error => {
+                console.error('Registration failed', error);
+            }
+        ));
+    } else {
+        console.error('Form is not valid', this.registrationForm.value);
+    }
+}
+
 
 }

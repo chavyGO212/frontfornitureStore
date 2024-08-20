@@ -5,11 +5,11 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class CustomerService {
+export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  getCustomerDetails(id: number): Observable<any> {
-    return this.http.get(`/api/users/${id}`);
+  login(email: string, password: string): Observable<any> {
+    return this.http.post('/api//users/{id}', { email, password }); // הנתיב הזה צריך להתאים לנתיב בשרת
   }
 }

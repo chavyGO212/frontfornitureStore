@@ -17,7 +17,7 @@ export class PersonalLogInComponent implements OnInit  {
 
 
   ngOnInit(): void {
-    const customerEmail = this.route.snapshot.paramMap.get('email'); 
+    const customerEmail = this.route.snapshot.paramMap.get('id'); 
     if (customerEmail !== null) {
       this.registrationService.getCustomerDetailsByEmail(customerEmail).subscribe(data => {
         this.customer = data;

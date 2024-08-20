@@ -23,7 +23,7 @@ import { ItemComponent } from './item/item.component';
 import { OrdersComponent } from './orders/orders.component';
 import { FooterComponent } from './footer/footer.component';
 import { StockComponent } from './stock/stock.component';
-import { ManageShopingCartComponent } from './manage-shoping-cart/manage-shoping-cart.component';
+import {  ManageShopingCartComponent } from './manage-shoping-cart/manage-shoping-cart.component';
 import { ManageClientsComponent } from './manage-clients/manage-clients.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ColorComponent } from './color/color.component';

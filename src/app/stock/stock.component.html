@@ -1,1 +1,32 @@
 
+
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>הזמנות</h1>
+        </header>
+        <main class="main-content">
+            <table class="order-table">
+                <thead>
+                    <tr>
+                        <th> מס הזמנה</th>
+                        <th>מס לקוח</th>
+                        <th>פריט </th>
+                        <th>תאריך הוספה לסל</th>
+                        <th>סטטוס ההזמנה</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let shopingCart of manageShopingCart">
+                        <td>{{shopingCart.orderNum}}</td>
+                        <td>{{shopingCart.customerNum}}</td>
+                        <td>{{shopingCart.item}}</td>
+                        <td>{{shopingCart.addDate}}</td>
+                        <td>{{shopingCart.status}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </main>
+    </div>
+</body>
+

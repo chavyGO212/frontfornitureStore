@@ -4,15 +4,19 @@
         <h1>אזור אישי ללקוח</h1>
         <section class="personal-details">
             <h2>פרטים אישיים</h2>
-            <p>{{customer.firstName}}</p>
-            <p>{{customer.lastName}}</p>
-            <p>{{customer.email}}</p>
-            <p>{{customer.phone}} </p>
+            <p>{{user.firstName}}</p>
+            <p>{{user.lastName}}</p>
+            <p>{{user.email}}</p>
+            <p>{{user.phone}} </p>
             <button routerLink="/update-p-d">עדכון פרטים אישיים</button><br>
+            <!-- <button routerLink="/orders" *ngIf="premmition_type_id==1">  טיפול בהזמנות לקוחות</button><br>
+            <button routerLink="/stock" *ngIf="premmition_type_id==1">  טיפול במלאי</button><br>
+            <button routerLink="/orders" *ngIf="premmition_type_id==1"> פרטי לקוחות רשומים</button><br>
+            <button routerLink="/orders" *ngIf="premmition_type_id==1">  דוח ניהול סלי קניות</button> -->
             <button routerLink="/orders" >  טיפול בהזמנות לקוחות</button><br>
-            <button routerLink="/stock">  טיפול במלאי</button><br>
-            <button routerLink="/orders"> פרטי לקוחות רשומים</button><br>
-            <button routerLink="/orders">  דוח ניהול סלי קניות</button>
+            <button routerLink="/stock" >  טיפול במלאי</button><br>
+            <button routerLink="/orders" > פרטי לקוחות רשומים</button><br>
+            <button routerLink="/orders" >  דוח ניהול סלי קניות</button>
         </section>
         <section class="payment-details">
             <h2>פרטי תשלום</h2>

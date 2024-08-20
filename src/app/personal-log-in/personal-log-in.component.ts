@@ -11,21 +11,16 @@ import { RegistrationService } from '../register/register.service';
   styleUrls: ['./personal-log-in.component.css']
 })
 export class PersonalLogInComponent implements OnInit  {
-  customer: any;
+  premmition_type_id = 1; 
+  user: any; //קבלת פרטי המשתמש
 
   constructor(private registrationService: RegistrationService, private route: ActivatedRoute) { }
 
 
   ngOnInit(): void {
-    const customerEmail = this.route.snapshot.paramMap.get('id'); 
-    if (customerEmail !== null) {
-      this.registrationService.getCustomerDetailsByEmail(customerEmail).subscribe(data => {
-        this.customer = data;
-      });
-    } else {
-      console.error('Customer email is null');
-      // כאן תוכל להוסיף טיפול במקרה שבו customerEmail הוא null
-    }
+    // //this.userService.getUserDetails().subscribe(user => {
+    //   this.premmitionTypeId = user.premmition_type_id;  // קבלת הערך מהשרת
+    // });
   }
   
 }

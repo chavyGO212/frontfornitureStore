@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { RegistrationService } from './register.service';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import{Router} from '@angular/router';
 
 
 @Component({
@@ -10,12 +10,15 @@ import { Router } from '@angular/router';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
+
 export class RegisterComponent  {
   subscription = new Subscription();
   readonly registerService = inject(RegistrationService);
   registrationForm: FormGroup;
-  constructor(private fb: FormBuilder, private registrationService: RegistrationService, private router: Router)  {
+  router: any;
+  constructor(private fb: FormBuilder, private registrationService: RegistrationService) {
   }
+
   ngOnInit(): void {
     this.buildForm();
   }
@@ -39,7 +42,7 @@ export class RegisterComponent  {
             response => {
                 this.registrationForm = response;
                 console.log('Registration successful', response);
-                this.router.navigate(['/log-in']);
+                this.router.navigate(['/personal-log-in', response.email]);
             },
             error => {
                 console.error('Registration failed', error);

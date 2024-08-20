@@ -1,61 +1,79 @@
-body{
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  text-align: center;
+  background-color: #ffffff; /* Optional: Add a background color to the body */
 }
 
 .container {
-    background-color: #fff;
-    padding: 20px;
-    border: 1px solid black;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 90%;
-    max-width: 400px;
-    direction: rtl;
+  background-color: #ffffff;
+  padding: 20px;
+  border: 1px solid black;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 600px;
+  direction: rtl;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto; /* Center the container horizontally */
 }
 
-.highlight {
-    background-color: yellow;
-    text-align: center;
+.color-table {
+  width: auto; /* Adjust table width to its content */
+  margin-bottom: 20px;
+  border-collapse: collapse;
 }
 
-h2 {
-    text-align: center;
-    margin-bottom: 20px;
+.color-table th, .color-table td {
+  border: 1px solid #241d1d;
+  padding: 10px;
+  text-align: center;
+}
+
+.color-table th {
+  background-color: #f2f2f2;
+}
+
+button {
+  margin: 0 5px;
 }
 
 .account-form {
-    display: flex;
-    flex-direction: column;
-}
-
-.account-form label {
-    margin-bottom: 5px;
-    font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .account-form input {
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
+  width: 100%;
+  max-width: 400px;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
 }
 
-
 .account-form button {
-    background-color: #ffa07a;
-    color: #fff;
-    border: none;
-    padding: 10px;
-    border-radius: 3px;
-    cursor: pointer;
-    font-size: 16px;
+  width: 100%;
+  max-width: 400px;
+  background-color: #d68a6c;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 16px;
 }
 
 .account-form button:hover {
-    background-color: #ff7f50;
+  background-color: #ff7f50;
 }

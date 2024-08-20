@@ -1,7 +1,7 @@
-
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Color } from './color.model'; // Assuming you have a Color model
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +11,19 @@ export class ColorService {
 
   constructor(private http: HttpClient) {}
 
-  register(user: any): Observable<any> {
-    console.log('Sending registration data to server:', user);  // Log the data being sent
-    return this.http.post(this.apiUrl, user);
+  getColors(): Observable<Color[]> {
+    return this.http.get<Color[]>(this.apiUrl);
+  }
+
+  addColor(color: Color): Observable<Color> {
+    return this.http.post<Color>(this.apiUrl, color);
+  }
+
+  updateColor(id: number, color: Color): Observable<Color> {
+    return this.http.put<Color>(`${this.apiUrl}/${id}`, color);
+  }
+
+  deleteColor(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

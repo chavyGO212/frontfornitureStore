@@ -1,49 +1,89 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ColorService } from './color.service';
-import { Subscription } from 'rxjs/internal/Subscription';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { Color } from './color.model'; // Assuming you have a Color model
 
 @Component({
   selector: 'app-color',
   templateUrl: './color.component.html',
   styleUrls: ['./color.component.css']
 })
-export class ColorComponent  {
-  subscription = new Subscription();
-  readonly colorsService = inject(ColorService);
+export class ColorComponent implements OnInit {
+  colors: Color[] = [];
   addColorForm: FormGroup;
-  
-  constructor(private fb: FormBuilder, private colorService: ColorService) {
-  }
+  editMode: boolean = false;
+  colorToEdit: Color | null = null;
+
+  constructor(private fb: FormBuilder, private colorService: ColorService) {}
+
   ngOnInit(): void {
     this.buildForm();
+    this.loadColors();
   }
-  buildForm(){
+
+  buildForm() {
     this.addColorForm = this.fb.group({
-      colorCode: ['', [Validators.required]],
       colorDescription: ['', Validators.required],
     });
-    console.log(this.addColorForm.value);
-  
   }
-  // פונקציה להירשם שתבוצע בלחיצה על הכפתור
-  addColor() {
-    console.log('Attempting to add color with data:', this.addColorForm.value);
+
+  loadColors() {
+    this.colorService.getColors().subscribe(
+      (data) => {
+        this.colors = data;
+      },
+      (error) => {
+        console.error('Failed to load colors', error);
+      }
+    );
+  }
+
+  onSubmit() {
     if (this.addColorForm.valid) {
-        console.log('Form data being sent:', this.addColorForm.value); // Additional log before the HTTP request
-        this.subscription.add(this.colorService.register(this.addColorForm.value).subscribe(
-            response => {
-                console.log('add color successful', response);
-            },
-            error => {
-                console.error('add color failed', error);
-            }
-        ));
-    } else {
-        console.error('Form is not valid', this.addColorForm.value);
+      if (this.editMode && this.colorToEdit) {
+        this.colorService.updateColor(this.colorToEdit.colorCode, this.addColorForm.value).subscribe(
+          (updatedColor) => {
+            this.loadColors();
+            this.resetForm();
+          },
+          (error) => {
+            console.error('Failed to update color', error);
+          }
+        );
+      } else {
+        this.colorService.addColor(this.addColorForm.value).subscribe(
+          (newColor) => {
+            this.colors.push(newColor);
+            this.resetForm();
+          },
+          (error) => {
+            console.error('Failed to add color', error);
+          }
+        );
+      }
     }
-}
+  }
 
+  onEdit(color: Color) {
+    this.editMode = true;
+    this.colorToEdit = color;
+    this.addColorForm.patchValue(color);
+  }
 
+  onDelete(id: number) {
+    this.colorService.deleteColor(id).subscribe(
+      () => {
+        this.colors = this.colors.filter(color => color.colorCode !== id);
+      },
+      (error) => {
+        console.error('Failed to delete color', error);
+      }
+    );
+  }
+
+  resetForm() {
+    this.addColorForm.reset();
+    this.editMode = false;
+    this.colorToEdit = null;
+  }
 }

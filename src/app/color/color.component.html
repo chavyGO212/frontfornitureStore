@@ -1,14 +1,35 @@
-<body>
 <div class="container">
-    <h2>הוספת צבע</h2>
-    <form class="account-form" [formGroup]="addColorForm" (ngSubmit)="addColor()">
-        <label for="colorCode">מק"ט צבע</label>
-        <input type="number" id="colorCode" name="colorCode" formControlName="colorCode" required>
+    <h2>ניהול צבעים</h2>
 
-        <label for="colorDescription"> צבע</label>
-        <input type="text" id="colorDescription" name="colorDescription" formControlName="colorDescription" required>
+    <table *ngIf="colors.length > 0; else noColors" class="color-table">
+        <thead>
+            <tr>
+                <th>מק"ט צבע</th>
+                <th>תיאור צבע</th>
+                <th>פעולות</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let color of colors">
+                <td>{{ color.colorCode }}</td>
+                <td>{{ color.colorDescription }}</td>
+                <td>
+                    <button (click)="onEdit(color)">ערוך</button>
+                    <button (click)="onDelete(color.colorCode)">מחק</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 
-        <button type="submit" >הוסף</button>
+    <ng-template #noColors>
+        <p>אין צבעים זמינים. הוסף צבע חדש.</p>
+    </ng-template>
+
+    <h3>{{ editMode ? 'עריכת צבע' : 'הוספת צבע חדש' }}</h3>
+    <form [formGroup]="addColorForm" (ngSubmit)="onSubmit()">
+        <label for="colorDescription">תיאור צבע</label>
+        <input type="text" id="colorDescription" formControlName="colorDescription" required>
+
+        <button type="submit">{{ editMode ? 'עדכן צבע' : 'הוסף צבע' }}</button>
     </form>
 </div>
-</body>

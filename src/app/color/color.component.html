@@ -1,0 +1,14 @@
+<body>
+<div class="container">
+    <h2>הוספת צבע</h2>
+    <form class="account-form" [formGroup]="addColorForm" (ngSubmit)="addColor()">
+        <label for="colorCode">מק"ט צבע</label>
+        <input type="number" id="colorCode" name="colorCode" formControlName="colorCode" required>
+
+        <label for="colorDescription"> צבע</label>
+        <input type="text" id="colorDescription" name="colorDescription" formControlName="colorDescription" required>
+
+        <button type="submit" >הוסף</button>
+    </form>
+</div>
+</body>

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http'
+import { RouterModule, Routes } from '@angular/router';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -25,6 +26,12 @@ import { StockComponent } from './stock/stock.component';
 import { ManageShopingCartComponent } from './manage-shoping-cart/manage-shoping-cart.component';
 import { ManageClientsComponent } from './manage-clients/manage-clients.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ColorComponent } from './color/color.component';
+
+const routes: Routes = [
+  { path: 'color', component: ColorComponent }, // Route to your new ColorComponent
+  { path: '', redirectTo: '/color', pathMatch: 'full' }, // Optional: Redirect to 'color' as default
+]
 
 @NgModule({
   declarations: [
@@ -48,13 +55,15 @@ import { ReactiveFormsModule } from '@angular/forms';
     FooterComponent,
     StockComponent,
     ManageShopingCartComponent,
-    ManageClientsComponent
+    ManageClientsComponent,
+    ColorComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterModule.forRoot(routes),
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -13,6 +13,7 @@ export class RegisterComponent  {
   subscription = new Subscription();
   readonly registerService = inject(RegistrationService);
   registrationForm: FormGroup;
+  router: any;
   constructor(private fb: FormBuilder, private registrationService: RegistrationService) {
   }
   ngOnInit(): void {
@@ -36,7 +37,9 @@ export class RegisterComponent  {
         console.log('Form data being sent:', this.registrationForm.value); // Additional log before the HTTP request
         this.subscription.add(this.registerService.register(this.registrationForm.value).subscribe(
             response => {
+                this.registrationForm = response;
                 console.log('Registration successful', response);
+                this.router.navigate(['/personal-log-in', response.email]);
             },
             error => {
                 console.error('Registration failed', error);
@@ -47,5 +50,6 @@ export class RegisterComponent  {
     }
 }
 
-
 }
+
+

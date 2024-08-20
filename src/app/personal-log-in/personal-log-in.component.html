@@ -4,11 +4,12 @@
         <h1>אזור אישי ללקוח</h1>
         <section class="personal-details">
             <h2>פרטים אישיים</h2>
-            <p>שם: ישראל ישראלי</p>
-            <p>אימייל: israel@example.com</p>
-            <p>טלפון: 052-1234567</p>
+            <p>{{customer.firstName}}</p>
+            <p>{{customer.lastName}}</p>
+            <p>{{customer.email}}</p>
+            <p>{{customer.phone}} </p>
             <button routerLink="/update-p-d">עדכון פרטים אישיים</button><br>
-            <button routerLink="/orders">  טיפול בהזמנות לקוחות</button><br>
+            <button routerLink="/orders" >  טיפול בהזמנות לקוחות</button><br>
             <button routerLink="/stock">  טיפול במלאי</button><br>
             <button routerLink="/orders"> פרטי לקוחות רשומים</button><br>
             <button routerLink="/orders">  דוח ניהול סלי קניות</button>

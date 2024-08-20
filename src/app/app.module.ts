@@ -30,7 +30,8 @@ import { ColorComponent } from './color/color.component';
 
 const routes: Routes = [
   { path: 'color', component: ColorComponent }, // Route to your new ColorComponent
-  { path: '', redirectTo: '/color', pathMatch: 'full' }, // Optional: Redirect to 'color' as default
+  { path: '', redirectTo: '/color', pathMatch: 'full' },
+  {path:'log-in',component:LogInComponent} // Optional: Redirect to 'color' as default
 ]
 
 @NgModule({

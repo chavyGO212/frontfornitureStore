@@ -16,7 +16,7 @@ export class RegisterComponent  {
   readonly registerService = inject(RegistrationService);
   registrationForm: FormGroup;
   router: any;
-  constructor(private fb: FormBuilder, private registrationService: RegistrationService) {
+  constructor(private fb: FormBuilder, private registrationService: RegistrationService, private Router: Router) {
   }
 
   ngOnInit(): void {
@@ -42,7 +42,7 @@ export class RegisterComponent  {
             response => {
                 this.registrationForm = response;
                 console.log('Registration successful', response);
-                this.router.navigate(['/personal-log-in', response.email]);
+                this.router.navigate(['/log-in']);
             },
             error => {
                 console.error('Registration failed', error);

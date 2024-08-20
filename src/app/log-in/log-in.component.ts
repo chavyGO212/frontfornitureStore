@@ -42,10 +42,10 @@ export class LogInComponent implements OnInit{
       this.authService.login(email, password).subscribe(
         response => {
           if (response.success) {
-            this.router.navigate(['/personal-log-in']);  // נניח שזה הנתיב לאזור האישי
+            this.router.navigate(['/personal-log-in']); 
           } else {
             // טיפול במקרה של כשל בכניסה
-            console.error('Login failed');
+            console.error('user not found');
           }
         },
         error => {

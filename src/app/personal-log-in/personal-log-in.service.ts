@@ -9,7 +9,7 @@ export class CustomerService {
 
   constructor(private http: HttpClient) { }
 
-  getCustomerDetails(email: string): Observable<any> {
-    return this.http.get(`/api/users/${email}`);
+  getCustomerDetails(id: number): Observable<any> {
+    return this.http.get(`/api/users/${id}`);
   }
 }

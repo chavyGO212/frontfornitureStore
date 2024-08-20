@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from './auth.service';
 //import { AuthService } from './auth.service';  // נניח שיש לך שירות לביצוע אימות
 
 
@@ -9,7 +10,7 @@ import { Router } from '@angular/router';
   templateUrl: './log-in.component.html',
   styleUrls: ['./log-in.component.css']
 })
-export class LogInComponent {
+export class LogInComponent implements OnInit{
   
   loginForm: FormGroup;
 
@@ -23,6 +24,17 @@ export class LogInComponent {
       password: ['', Validators.required]
     });
   }
+  ngOnInit(): void {
+    this.buildForm();
+  }
+  buildForm(){
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
+    });
+    console.log(this.loginForm.value);
+  
+  }
 
   onLogin() {
     if (this.loginForm.valid) {
@@ -30,7 +42,6 @@ export class LogInComponent {
       this.authService.login(email, password).subscribe(
         response => {
           if (response.success) {
-            // נניח שהתגובה מהשרת כוללת סימן הצלחה ונתוני המשתמש
             this.router.navigate(['/personal-log-in']);  // נניח שזה הנתיב לאזור האישי
           } else {
             // טיפול במקרה של כשל בכניסה

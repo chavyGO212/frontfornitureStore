@@ -1,43 +1,87 @@
+<div class="container">
+    <h2>ניהול קטלוג</h2>
 
+    <!-- Form for adding/updating catalog items -->
+    <h3>{{ editMode ? 'עריכת פריט' : 'הוספת פריט חדש' }}</h3>
+    <form [formGroup]="addStockForm" (ngSubmit)="onSubmit()">
+        <label for="productName">שם מוצר</label>
+        <input type="text" id="productName" formControlName="productName" required>
 
-<body>
-    <div class="container">
-        <header class="header">
-            <h1>מלאי</h1>
-        </header>
-        <main class="main-content">
-            <table class="order-table">
-                <thead>
-                    <tr>
-                        <th> שם פריט</th>
-                        <th> תיאור</th>
-                        <th>צבע  </th>
-                        <th>מחיר  </th>
-                        <th>מבצע </th>
-                        <th>כמות במלאי </th>
-                        <th>מוצג ללקוח </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let item of stock">
-                        <div class="table">
-                            <img src="../../assets/images/fornuturBigImage.jpg" alt="כאן יש תמונה של כסא">
-                            <!--הפנייה לתמונה מתאימה וייחודית-->
-                            <h1>{{item.productName}}</h1>
-                            <h2>{{item.description}}</h2>
-                            <h3>{{item.descriptionFull}}</h3>
-                            <h3>{{item.color}}</h3>
-                            <h3>{{item.price}}</h3>
-                            <h3>{{item.promotion}}</h3>
-                            <h3>{{item.stock}}</h3>
-                            <button>ערוך</button>
-                            <button >מחיקת מוצר</button>
-                        </div>
-                    </tr>
-                </tbody>
-            </table>
-            <button routerLink="/newItem">הוספת פריט חדש</button>
-        </main>
-    </div>
-</body>
+        <label for="typeOfItem">סוג פריט</label>
+        <select id="typeOfItem" formControlName="typeOfItem" required>
+            <option *ngFor="let itemType of itemTypes" [value]="itemType">{{ itemType }}</option>
+        </select>
 
+        <label for="colorCode">צבע</label>
+        <select id="colorCode" formControlName="colorCode" required>
+            <option *ngFor="let color of colors" [value]="color.colorCode">{{ color.colorDescription }}</option>
+        </select>
+
+        <label for="description">תיאור</label>
+        <input type="text" id="description" formControlName="description">
+
+        <label for="descriptionFull">תיאור מלא</label>
+        <textarea id="descriptionFull" formControlName="descriptionFull"></textarea>
+
+        <label for="price">מחיר</label>
+        <input type="number" id="price" formControlName="price" required>
+
+        <label for="stock">מלאי</label>
+        <input type="number" id="stock" formControlName="stock" required>
+
+        <label for="status">סטטוס</label>
+        <select id="status" formControlName="status">
+            <option value="true">זמין</option>
+            <option value="false">לא זמין</option>
+        </select>
+
+        <label for="promotionCode">Promotion</label>
+        <select id="promotionCode" formControlName="promotionCode" required>
+            <option *ngFor="let promotion of promotions" [value]="promotion.promotionCode">
+                {{ promotion.description }}
+            </option>
+        </select>
+
+        <button type="submit">{{ editMode ? 'עדכן פריט' : 'הוסף פריט' }}</button>
+    </form>
+
+    <!-- Table to display the stock items -->
+    <h3>רשימת קטלוג</h3>
+    <table *ngIf="stockList.length > 0; else noStockItems" class="stock-table">
+        <thead>
+            <tr>
+                <th>מק"ט פריט</th>
+                <th>שם מוצר</th>
+                <th>סוג פריט</th>
+                <th>תיאור</th>
+                <th>מחיר</th>
+                <th>מלאי</th>
+                <th>צבע</th>
+                <th>סטטוס</th>
+                <th>הנחה</th>
+                <th>פעולות</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let stock of stockList">
+                <td>{{ stock.productID }}</td>
+                <td>{{ stock.productName }}</td>
+                <td>{{ stock.typeOfItem }}</td>
+                <td>{{ stock.description }}</td>
+                <td>{{ stock.price }}</td>
+                <td>{{ stock.stock }}</td>
+                <td>{{ stock.color.colorDescription }}</td>
+                <td>{{ stock.status ? 'זמין' : 'לא זמין' }}</td>
+                <td>{{ stock.promotion.description }}</td>
+                <td>
+                    <button (click)="onEdit(stock)">ערוך</button>
+                    <button (click)="onDelete(stock.productID)">מחק</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ng-template #noStockItems>
+        <p>אין פריטים בקטלוג. הוסף פריט חדש.</p>
+    </ng-template>
+</div>

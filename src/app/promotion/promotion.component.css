@@ -1,0 +1,92 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f0f0f0; /* Light background for better contrast */
+}
+
+.container {
+  background-color: #ffffff;
+  padding: 30px;
+  border: 1px solid #dcdcdc;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 800px; /* Increased width for more space */
+  direction: rtl;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 20px auto; /* Adds some vertical spacing */
+}
+
+.promotion-table {
+  width: 100%; /* Full width of the container */
+  margin-bottom: 20px;
+  border-collapse: collapse; /* Collapses borders for a clean look */
+}
+
+.promotion-table th, .promotion-table td {
+  border: 1px solid #241d1d; /* Border color for table cells */
+  padding: 10px;
+  text-align: center;
+}
+
+.promotion-table th {
+  background-color: #e9e9e9; /* Subtle background for header */
+  font-weight: bold;
+}
+
+button {
+  margin: 0 5px;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  background-color: #4caf50; /* Primary button color */
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+button:hover {
+  background-color: #45a049; /* Darker shade on hover */
+}
+
+.account-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.account-form input {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.account-form button {
+  width: 100%;
+  max-width: 400px;
+  background-color: #d68a6c;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.account-form button:hover {
+  background-color: #c77856; /* Slightly darker on hover */
+}

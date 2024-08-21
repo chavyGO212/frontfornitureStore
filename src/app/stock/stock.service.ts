@@ -5,25 +5,38 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class stockService {
+export class StockService {
+  private apiUrl = 'http://localhost:9090/api/catalog';
 
-  private apiUrlGet = 'http://localhost:9090/api/getStock'; 
-  private apiUrlaDD = 'http://localhost:9090/api/addStock'; 
-  private apiUrlDelete = 'http://localhost:9090/api/deleteStock/${id}'; 
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { }
-
-  getData(): Observable<any> {
-    return this.http.get<any>(this.apiUrlGet);
-    //return this.http.get<any>(this.apiUrl);
+  // Get all stock items (catalog items)
+  getAllStock(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl);
   }
 
-  addItem(item: any): Observable<any> {
-    return this.http.post(this.apiUrlaDD, item);
-   }
+  // Get a specific stock item by ID
+  getStockById(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/${id}`);
+  }
 
-   deleteItem(item: any): Observable<any>{
-    return this.http.delete(this.apiUrlDelete);
-     
-   }
+  // Create a new stock item
+  createStock(stockData: any): Observable<any> {
+    return this.http.post<any>(this.apiUrl, stockData);
+  }
+
+  // Update an existing stock item
+  updateStock(id: number, stockData: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/${id}`, stockData);
+  }
+
+  // Delete a stock item by ID
+  deleteStock(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
+  // Get all item types (enum values)
+  getItemTypes(): Observable<string[]> {
+    return this.http.get<string[]>(`${this.apiUrl}/item-types`);
+  }
 }

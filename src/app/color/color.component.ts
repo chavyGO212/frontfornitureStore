@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ColorService } from './color.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Color } from './color.model'; // Assuming you have a Color model
+import { Color } from './color.model'; 
 
 @Component({
   selector: 'app-color',

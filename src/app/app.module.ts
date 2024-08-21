@@ -28,11 +28,14 @@ import { ManageClientsComponent } from './manage-clients/manage-clients.componen
 import { ReactiveFormsModule } from '@angular/forms';
 import { ColorComponent } from './color/color.component';
 import { AddItemComponent } from './add-item-component/add-item-component.component';
+import { PromotionComponent } from './promotion/promotion.component';
 
 const routes: Routes = [
-  { path: 'color', component: ColorComponent }, // Route to your new ColorComponent
+  { path: 'color', component: ColorComponent }, // Route to   ColorComponent
   { path: '', redirectTo: '/color', pathMatch: 'full' },
-  {path:'log-in',component:LogInComponent} // Optional: Redirect to 'color' as default
+  {path:'log-in',component:LogInComponent}, // Optional: Redirect to 'color' as default
+  {path:'promotion', component: PromotionComponent}
+  // Route to   PromotionComponent
 ]
 
 @NgModule({
@@ -60,6 +63,7 @@ const routes: Routes = [
     ManageClientsComponent,
     ColorComponent,
     AddItemComponent,
+    PromotionComponent,
   ],
   imports: [
     BrowserModule,

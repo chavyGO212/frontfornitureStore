@@ -1,0 +1,40 @@
+<div class="container">
+    <h2>ניהול מבצעים</h2>
+
+    <table *ngIf="promotions.length > 0; else noPromotions" class="promotion-table">
+        <thead>
+            <tr>
+                <th>מק"ט מבצע</th>
+                <th>תיאור מבצע</th>
+                <th>הנחה (%)</th>
+                <th>פעולות</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let promotion of promotions">
+                <td>{{ promotion.promotionCode }}</td>
+                <td>{{ promotion.description }}</td>
+                <td>{{ promotion.discount }}</td>
+                <td>
+                    <button (click)="onEdit(promotion)">ערוך</button>
+                    <button (click)="onDelete(promotion.promotionCode)">מחק</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ng-template #noPromotions>
+        <p>אין מבצעים זמינים. הוסף מבצע חדש.</p>
+    </ng-template>
+
+    <h3>{{ editMode ? 'עריכת מבצע' : 'הוספת מבצע חדש' }}</h3>
+    <form [formGroup]="addPromotionForm" (ngSubmit)="onSubmit()">
+        <label for="description">תיאור מבצע</label>
+        <input type="text" id="description" formControlName="description" required>
+
+        <label for="discount">הנחה (%)</label>
+        <input type="number" id="discount" formControlName="discount" required>
+
+        <button type="submit">{{ editMode ? 'עדכן מבצע' : 'הוסף מבצע' }}</button>
+    </form>
+</div>

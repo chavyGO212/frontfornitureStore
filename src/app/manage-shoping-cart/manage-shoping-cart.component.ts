@@ -6,7 +6,7 @@ import { manageShopingCartService } from './manage-shoping-cart.service';
   templateUrl: './manage-shoping-cart.component.html',
   styleUrls: ['./manage-shoping-cart.component.css']
 })
-export class OrdersComponent implements OnInit{
+export class ManageShopingCartComponent implements OnInit{
   manageShopingCart: any[] = [];//דוגמא לקבלת נתונים בשורה 25
   constructor(private manageShopingCartService: manageShopingCartService) {}
     ngOnInit(): void {

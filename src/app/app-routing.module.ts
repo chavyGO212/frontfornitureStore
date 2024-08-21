@@ -13,6 +13,7 @@ import { PaymentComponent } from './payment/payment.component';
 import { ItemComponent } from './item/item.component';
 import { OrdersComponent } from './orders/orders.component';
 import { StockComponent } from './stock/stock.component';
+import {AddItemComponent} from './add-item-component/add-item-component.component'
 
 const routes: Routes = [
   {path: "", component: HomeComponent},
@@ -27,7 +28,8 @@ const routes: Routes = [
   {path: "payment", component: PaymentComponent},
   {path: "item", component: ItemComponent},
   {path: "orders", component: OrdersComponent},
-  {path: "stock", component: StockComponent}
+  {path: "stock", component: StockComponent},
+  {path: "newItem", component: AddItemComponent}
 ];
 
 @NgModule({

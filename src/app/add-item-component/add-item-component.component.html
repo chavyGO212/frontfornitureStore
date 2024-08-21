@@ -1,0 +1,39 @@
+
+<body>
+    <div class="container">
+        <h2> הוספת מוצר למלאי</h2>
+        <form class="account-form" [formGroup]="AddItemForm" (ngSubmit)="addItem()">
+            <label for="name">שם מוצר</label>
+                <input type="text" id="name" name="productName" formControlName="firstName" required>
+
+                <label for="description">פירוט קצר </label>
+                <input type="text" id="description" name="description" formControlName="description" required>
+
+                <label for="descriptionFull"> פירוט מלא</label>
+                <input type="text" id="descriptionFull" name="descriptionFull" formControlName="descriptionFull" required>
+
+            
+            <label for="SKU">מק"ט </label>
+            <input type="number" id="SKU" name="SKU" formControlName="SKU" required>
+
+            <label for="color">צבע</label>
+            <input type="color" id="color" name="color" formControlName="color" required>
+
+            <label for="price">מחיר</label>
+            <input type="number", id="price", name="price", formControlName="price">
+
+            <label for="promotion">מחיר</label>
+            <input type="radio", id="promotion", name="promotion", formControlName="promotion">
+
+            <label for="stock">כמות</label>
+            <input type="number", id="stock", name="stock", formControlName="stock">
+
+            <label for="status">מחיר</label>
+            <input type="radio", id="status", name="status", formControlName="status">
+
+
+            <button type="submit" >הוסף מוצר</button>
+        </form>
+    </div>
+</body>
+

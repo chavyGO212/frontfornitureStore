@@ -27,6 +27,7 @@ import {  ManageShopingCartComponent } from './manage-shoping-cart/manage-shopin
 import { ManageClientsComponent } from './manage-clients/manage-clients.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ColorComponent } from './color/color.component';
+import { AddItemComponent } from './add-item-component/add-item-component.component';
 
 const routes: Routes = [
   { path: 'color', component: ColorComponent }, // Route to your new ColorComponent
@@ -58,6 +59,7 @@ const routes: Routes = [
     ManageShopingCartComponent,
     ManageClientsComponent,
     ColorComponent,
+    AddItemComponent,
   ],
   imports: [
     BrowserModule,

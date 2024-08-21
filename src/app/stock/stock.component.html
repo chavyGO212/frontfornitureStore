@@ -3,29 +3,40 @@
 <body>
     <div class="container">
         <header class="header">
-            <h1>הזמנות</h1>
+            <h1>מלאי</h1>
         </header>
         <main class="main-content">
             <table class="order-table">
                 <thead>
                     <tr>
-                        <th> מס הזמנה</th>
-                        <th>מס לקוח</th>
-                        <th>פריט </th>
-                        <th>תאריך הוספה לסל</th>
-                        <th>סטטוס ההזמנה</th>
+                        <th> שם פריט</th>
+                        <th> תיאור</th>
+                        <th>צבע  </th>
+                        <th>מחיר  </th>
+                        <th>מבצע </th>
+                        <th>כמות במלאי </th>
+                        <th>מוצג ללקוח </th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let shopingCart of manageShopingCart">
-                        <td>{{shopingCart.orderNum}}</td>
-                        <td>{{shopingCart.customerNum}}</td>
-                        <td>{{shopingCart.item}}</td>
-                        <td>{{shopingCart.addDate}}</td>
-                        <td>{{shopingCart.status}}</td>
+                    <tr *ngFor="let item of stock">
+                        <div class="table">
+                            <img src="../../assets/images/fornuturBigImage.jpg" alt="כאן יש תמונה של כסא">
+                            <!--הפנייה לתמונה מתאימה וייחודית-->
+                            <h1>{{item.productName}}</h1>
+                            <h2>{{item.description}}</h2>
+                            <h3>{{item.descriptionFull}}</h3>
+                            <h3>{{item.color}}</h3>
+                            <h3>{{item.price}}</h3>
+                            <h3>{{item.promotion}}</h3>
+                            <h3>{{item.stock}}</h3>
+                            <button>ערוך</button>
+                            <button >מחיקת מוצר</button>
+                        </div>
                     </tr>
                 </tbody>
             </table>
+            <button routerLink="/newItem">הוספת פריט חדש</button>
         </main>
     </div>
 </body>

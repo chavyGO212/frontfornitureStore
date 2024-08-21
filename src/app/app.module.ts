@@ -25,10 +25,11 @@ import { FooterComponent } from './footer/footer.component';
 import { StockComponent } from './stock/stock.component';
 import {  ManageShopingCartComponent } from './manage-shoping-cart/manage-shoping-cart.component';
 import { ManageClientsComponent } from './manage-clients/manage-clients.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule,FormsModule } from '@angular/forms';
 import { ColorComponent } from './color/color.component';
 import { AddItemComponent } from './add-item-component/add-item-component.component';
 import { PromotionComponent } from './promotion/promotion.component';
+
 
 const routes: Routes = [
   { path: 'color', component: ColorComponent }, // Route to   ColorComponent
@@ -71,6 +72,7 @@ const routes: Routes = [
     HttpClientModule,
     ReactiveFormsModule,
     RouterModule.forRoot(routes),
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

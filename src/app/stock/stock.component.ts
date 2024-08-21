@@ -2,23 +2,25 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { StockService } from './stock.service';
 import { ColorService } from '../color/color.service';
-import { Color } from '../color/color.model'; // Import the Color interface
-import { Promotion } from '../promotion/promotion.model';
 import { PromotionService } from '../promotion/promotion.service';
+import { Color } from '../color/color.model'; 
+import { Promotion } from '../promotion/promotion.model';
 
 @Component({
   selector: 'app-stock',
-  templateUrl: './stock.component.html', // Ensure this points to the correct template file
+  templateUrl: './stock.component.html', 
   styleUrls: ['./stock.component.css']
 })
 export class StockComponent implements OnInit {
   addStockForm: FormGroup;
-  colors: Color[] = []; // List of colors fetched from the backend
-  itemTypes: string[] = []; // List of item types fetched from the backend
-  stockList: any[] = []; // List of stock items displayed in the table
-  promotions: Promotion[] = []; //List of promotions displayed in the table
-  editMode = false; // Indicates whether the form is in edit mode
-  editStockId: number | null = null; // The ID of the stock item being edited
+  colors: Color[] = []; 
+  itemTypes: string[] = []; 
+  stockList: any[] = []; 
+  promotions: Promotion[] = []; 
+  filteredStockList: any[] = [];
+  editMode = false; 
+  editStockId: number | null = null; 
+  searchTerm: string = ''; 
 
   constructor(
     private fb: FormBuilder,
@@ -28,65 +30,83 @@ export class StockComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.addStockForm = this.fb.group({
-      productName: [''], // Name of the product
-      typeOfItem: [''], // Type of item (e.g., chair, table)
-      colorCode: [''], // Code of the selected color
-      promotionCode: [''],//Promotion
-      description: [''], // Short description of the product
-      descriptionFull: [''], // Full description of the product
-      price: [''], // Price of the product
-      stock: [''], // Available stock of the product
-      status: ['true'] // Availability status of the product (true = available)
-    });
+    this.initializeForm();
+    this.loadInitialData();
+  }
 
-    this.fetchColors(); // Fetch available colors from the backend
-    this.fetchItemTypes(); // Fetch available item types from the backend
-    this.fetchStockList(); // Fetch the list of stock items from the backend
-    this.fetchPromotions();//Fetch the List of promotions from the backend
+  initializeForm(): void {
+    this.addStockForm = this.fb.group({
+      productName: [''], 
+      typeOfItem: [''], 
+      colorCode: [''], 
+      promotionCode: [''], 
+      description: [''], 
+      descriptionFull: [''], 
+      price: [''], 
+      stock: [''], 
+      status: ['true'] 
+    });
+  }
+
+  loadInitialData(): void {
+    this.fetchColors();
+    this.fetchItemTypes();
+    this.fetchPromotions();
+    this.fetchStockList();
   }
 
   fetchColors(): void {
     this.colorService.getColors().subscribe((data: Color[]) => {
       this.colors = data;
-      console.log('Fetched colors:', this.colors); // Log fetched colors for debugging
+      console.log('Fetched colors:', this.colors);
     });
   }
 
   fetchItemTypes(): void {
     this.stockService.getItemTypes().subscribe((data: string[]) => {
       this.itemTypes = data;
-      console.log('Fetched item types:', this.itemTypes); // Log fetched item types for debugging
+      console.log('Fetched item types:', this.itemTypes);
+    });
+  }
+
+  fetchPromotions(): void {
+    this.promotionService.getPromotion().subscribe((data: Promotion[]) => {
+      this.promotions = data;
+      console.log('Fetched promotions:', this.promotions);
     });
   }
 
   fetchStockList(): void {
     this.stockService.getAllStock().subscribe((data: any[]) => {
       this.stockList = data;
-      console.log('Fetched stock list:', this.stockList); // Log fetched stock items for debugging
+      this.filteredStockList = data; 
+      console.log('Fetched stock list:', this.stockList);
     });
   }
 
-  fetchPromotions(): void { // Fetch promotions from backend
-    this.promotionService.getPromotion().subscribe((data: Promotion[]) => {
-      this.promotions = data;
-    });
+  filterStockList(): void {
+    this.filteredStockList = this.stockList.filter(stock => 
+      stock.productName.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+      stock.typeOfItem.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+      stock.color.colorDescription.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+      stock.promotion.description.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
   }
 
   onSubmit(): void {
     if (this.addStockForm.valid) {
       const stockData = this.addStockForm.value;
-      console.log('Form data before submission:', stockData); // Log form data before sending it to the backend
+      console.log('Form data before submission:', stockData);
 
       if (this.editMode && this.editStockId !== null) {
         this.stockService.updateStock(this.editStockId, stockData).subscribe(() => {
           this.resetForm();
-          this.fetchStockList(); // Refresh the stock list after updating
+          this.fetchStockList();
         });
       } else {
         this.stockService.createStock(stockData).subscribe(() => {
           this.resetForm();
-          this.fetchStockList(); // Refresh the stock list after creating a new item
+          this.fetchStockList();
         });
       }
     }
@@ -99,6 +119,7 @@ export class StockComponent implements OnInit {
       productName: stock.productName,
       typeOfItem: stock.typeOfItem,
       colorCode: stock.color.colorCode,
+      promotionCode: stock.promotion.promotionCode,
       description: stock.description,
       descriptionFull: stock.descriptionFull,
       price: stock.price,
@@ -109,7 +130,7 @@ export class StockComponent implements OnInit {
 
   onDelete(productId: number): void {
     this.stockService.deleteStock(productId).subscribe(() => {
-      this.fetchStockList(); // Refresh the stock list after deleting an item
+      this.fetchStockList();
     });
   }
 
@@ -117,7 +138,7 @@ export class StockComponent implements OnInit {
     this.editMode = false;
     this.editStockId = null;
     this.addStockForm.reset({
-      status: 'true' // Reset status to 'true' by default
+      status: 'true' 
     });
   }
 }

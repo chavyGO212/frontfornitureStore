@@ -6,13 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./table.component.css']
 })
 export class TableComponent {
-  table={
-    productName: '',
-    description: '',
-    descriptionFull: '',
-    color: '', //color type
-    price: 0, //number typy
-    promotion: '', //?needed
-    stock: ''//? needed
-  }
+  table: any
 }

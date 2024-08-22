@@ -25,3 +25,7 @@ body {
 .gallery-item:hover img {
     transform: scale(1.1);
 }
+
+.gallery-item:hover{
+    cursor: pointer;
+}

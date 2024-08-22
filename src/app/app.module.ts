@@ -29,6 +29,7 @@ import { ReactiveFormsModule,FormsModule } from '@angular/forms';
 import { ColorComponent } from './color/color.component';
 import { AddItemComponent } from './add-item-component/add-item-component.component';
 import { PromotionComponent } from './promotion/promotion.component';
+import { CreditCardComponent } from './credit-card/credit-card.component';
 
 
 const routes: Routes = [
@@ -65,6 +66,7 @@ const routes: Routes = [
     ColorComponent,
     AddItemComponent,
     PromotionComponent,
+    CreditCardComponent,
   ],
   imports: [
     BrowserModule,

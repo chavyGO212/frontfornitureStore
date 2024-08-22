@@ -26,11 +26,11 @@ const routes: Routes = [
   {path: "register", component: RegisterComponent},
   {path: "shopping-cart", component: ShoppingCartComponent},
   {path: "payment", component: PaymentComponent},
-  {path: "item", component: ItemComponent},
+  {path: "item/:id", component: ItemComponent},
   {path: "orders", component: OrdersComponent},
   {path: "stock", component: StockComponent},
   {path: "newItem", component: AddItemComponent}
-];
+  ]
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

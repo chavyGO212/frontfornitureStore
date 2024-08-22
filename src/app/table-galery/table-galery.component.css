@@ -1,19 +1,17 @@
-body {
-    display: flex;
+
+.gallery-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 5px; /* הקטנת המרווחים בין הפריטים */
+    padding: 10px; /* ריווח פנימי */
     justify-content: center;
-    align-items: center;
-    margin: 0;
+    align-items: start; /* מתיחת הפריטים למעלה */
+    margin: 0 auto; /* מרכז את הגלריה בעמוד */
     font-family: Arial, sans-serif;
     direction: rtl;
 }
 
-.gallery-container {
-    display:grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-    max-width: 95%;
-    
-}
+
 
 .gallery-item img {
     width: 100%;

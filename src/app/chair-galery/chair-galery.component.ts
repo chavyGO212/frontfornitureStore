@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ChairGalleryService } from './chair-galery.service';  
 
 @Component({
   selector: 'app-chair-galery',
@@ -6,5 +7,20 @@ import { Component } from '@angular/core';
   styleUrls: ['./chair-galery.component.css']
 })
 export class ChairGaleryComponent {
-  gallery= []
+  items: any[] = [];
+  constructor(private ChairGalleryService: ChairGalleryService) {}
+
+  ngOnInit() {
+    this.ChairGalleryService.getItems().subscribe(data => {
+      this.items = data;
+    });
+  }
 }
+
+
+
+
+
+  
+
+  

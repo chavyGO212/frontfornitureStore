@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class CatalogService {
+export class ChairGalleryService {
 
   private baseUrl = 'http://localhost:9090/api/catalog';  
 

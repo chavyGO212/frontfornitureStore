@@ -1,10 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { CatalogService } from './table-glery.service';  
 
 @Component({
-  selector: 'app-table-galery',
+  selector: 'app-table-gallery',
   templateUrl: './table-galery.component.html',
   styleUrls: ['./table-galery.component.css']
 })
-export class TableGaleryComponent {
-      gallery = []
+export class TableGaleryComponent implements OnInit {
+  items: any[] = [];
+
+  constructor(private catalogService: CatalogService) {}
+
+  ngOnInit() {
+    this.catalogService.getItems().subscribe(data => {
+      this.items = data;
+    });
+  }
 }

@@ -1,9 +1,13 @@
+
 <div class="table">
-    <img src="../../assets/images/fornuturBigImage.jpg" alt="כאן יש תמונה של שולחן">
-    <!--הפנייה לתמונה מתאימה וייחודית-->
-    <h1>{{table.productName}}</h1>
-    <h2>{{table.description}}</h2>
-    <h3>{{table.color}}</h3>
-    <h3>{{table.price}}</h3>
-    <h3>{{table.promotion}}</h3>
+    <!-- <img [src]="product.imageUrl" alt="{{product.productName}}"> -->
+    <h1>{{product.productName}}</h1>
+    <h2>{{product.description}}</h2>
+    <h1>{{product.descriptionFull}}</h1>
+    <h1>{{product.color}}</h1>
+    <h3>{{product.price}}</h3>
+    <h3>{{product.price}} ש"ח</h3>
+    <h1>{{product.promotion}}</h1>
+    <h3>{{product.stock}} ש"ח</h3>
+    <h1>{{product.status}}</h1>
 </div>

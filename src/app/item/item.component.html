@@ -1,29 +1,25 @@
-
-<body>
-    <div class="product-container">
-        <div class="product-details" *ngFor="let item for item">
-            <h1>{{item.description}}</h1>
-            <p>{{item.descriptionFull}}</p>
-            <p><strong>מחיר:</strong> {{item.price}}</p>
-            <div class="quantity">
-                <span>כמות:</span>
-                <button class="quantity-button">-</button>
-                <input type="text" value="1" class="quantity-input">
-                <button class="quantity-button">+</button>
-            </div>
-            <div class="colors">
-                <span *ngFor="let color for color">צבעים:</span>
-                <button class="color-button">{{item.color}}</button>
-            </div>
-            <div class="stock">
-                <span>נשארו {{item.stock}} במלאי</span>
-            </div>
-            <button class="add-to-cart">הוספה לסל</button>
-            <a href="#" class="view-cart">לחזור לקניות</a>
+<div class="product-container" *ngIf="product">
+    <div class="product-details">
+        <h1>{{product.productName}}</h1>
+        <p>{{product.descriptionFull}}</p>
+        <p><strong>מחיר:</strong> {{product.price}} ש"ח</p>
+        <div class="quantity">
+            <span>כמות:</span>
+            <button (click)="decreaseQuantity()" class="quantity-button">-</button>
+            <input type="text" [(ngModel)]="quantity" class="quantity-input">
+            <button (click)="increaseQuantity()" class="quantity-button">+</button>
         </div>
-        <div class="product-image">
-            <img src="../../assets/table-homejpg.jpg" alt="תמונה של שולחן כתר מתקפל">
-            <p>{{item.productName}}</p>
+        <div class="colors">
+            <span>צבעים:</span>
+            <button *ngFor="let color of product.colors" class="color-button">{{color}}</button>
         </div>
+        <div class="stock">
+            <span>נשארו {{product.stock}} במלאי</span>
+        </div>
+        <button (click)="addToCart(product)" class="add-to-cart" [disabled]="!isLoggedIn">הוספה לסל</button>
+        <a routerLink="/gallery" class="view-cart">לחזור לקניות</a>
     </div>
-</body>
+    <div class="product-image">
+        <img [src]="product.imageUrl" alt="{{product.productName}}">
+    </div>
+</div>

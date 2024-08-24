@@ -1,6 +1,9 @@
+
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { itemService } from '../item/item.service';
+import { ShopingCartService } from '../shopping-cart/shoping-cart.service';
+import { AuthService } from '../log-in/auth.service'; // שירות לבדיקה אם המשתמש רשום
 
 @Component({
   selector: 'app-item',
@@ -8,15 +11,45 @@ import { itemService } from '../item/item.service';
   styleUrls: ['./item.component.css']
 })
 export class ItemComponent implements OnInit {
+  product: any;
+  quantity: number = 1;
+  isLoggedIn: boolean = false;
 
-  item: any;
+  constructor(
+    private route: ActivatedRoute,
+    private itemService: itemService,
+    private cartService: ShopingCartService,
+    private authService: AuthService 
+  ) {}
 
-  constructor(private route: ActivatedRoute, private itemService: itemService) { }
+    ngOnInit(): void {
+      const id = this.route.snapshot.paramMap.get('id');
+      if (id) {
+        this.itemService.getProductById(id).subscribe(data => {
+          this.product = data;
+        });
+      } else {
+        console.error('ID is null');
+      }
+      this.isLoggedIn = this.authService.isLoggedIn();
+    }
+    
 
-  ngOnInit(): void {
-    const itemId = this.route.snapshot.paramMap.get('id');
-    this.itemService.getItemById(Number(itemId)).subscribe(data => {
-      this.item = data;
-    });
+  increaseQuantity(): void {
+    this.quantity++;
+  }
+
+  decreaseQuantity(): void {
+    if (this.quantity > 1) {
+      this.quantity--;
+    }
+  }
+
+  addToCart(product: any): void {
+    if (this.isLoggedIn) {
+      this.cartService.addToCart({ ...product, quantity: this.quantity });
+    } else {
+      alert('עליך להתחבר כדי להוסיף לסל הקניות');
+    }
   }
 }

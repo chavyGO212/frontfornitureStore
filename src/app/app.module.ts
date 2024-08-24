@@ -6,7 +6,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
-import { GaleryComponent } from './galery/galery.component';
 import { ChairGaleryComponent } from './chair-galery/chair-galery.component';
 import { TableGaleryComponent } from './table-galery/table-galery.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
@@ -44,7 +43,6 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     HomeComponent,
-    GaleryComponent,
     ChairGaleryComponent,
     TableGaleryComponent,
     NavBarComponent,

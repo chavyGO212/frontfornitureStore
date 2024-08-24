@@ -7,11 +7,12 @@ import { Observable } from 'rxjs';
 })
 export class itemService {
 
-  private apiUrl = 'http://localhost:9090/api/catalog/{id}'; 
+  private baseUrl = 'http://localhost:9090/api/catalog';
 
   constructor(private http: HttpClient) { }
 
-  getItemById(id: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/${id}`);
+  getProductById(id: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/${id}`);
   }
 }
+

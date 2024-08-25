@@ -1,7 +1,7 @@
 
 <div class="gallery-container">
     <div *ngFor="let item of items" class="gallery-item">
-        <div [routerLink]="['/item', item.id]">
+        <div [routerLink]="['/item', item.productID]">
             <app-table [product]="item"></app-table>
         </div>
     </div>

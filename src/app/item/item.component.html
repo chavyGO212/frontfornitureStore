@@ -1,4 +1,4 @@
-<div class="product-container" *ngIf="product">
+<div class="product-container" >
     <div class="product-details">
         <h1>{{product.productName}}</h1>
         <p>{{product.descriptionFull}}</p>
@@ -16,8 +16,8 @@
         <div class="stock">
             <span>נשארו {{product.stock}} במלאי</span>
         </div>
-        <button (click)="addToCart(product)" class="add-to-cart" [disabled]="!isLoggedIn">הוספה לסל</button>
-        <a routerLink="/gallery" class="view-cart">לחזור לקניות</a>
+        <button (click)="addToCart(product)" class="add-to-cart" >הוספה לסל</button>
+        <a routerLink="" class="view-cart">לחזור לקניות</a>
     </div>
     <div class="product-image">
         <img [src]="product.imageUrl" alt="{{product.productName}}">

@@ -27,7 +27,7 @@ const routes: Routes = [
   {path: "register", component: RegisterComponent},
   {path: "shopping-cart", component: ShoppingCartComponent},
   {path: "payment", component: PaymentComponent},
-  {path: "item/:id", component: ItemComponent},
+  {path: "item/:productID", component: ItemComponent},
   {path: "orders", component: OrdersComponent},
   {path: "stock", component: StockComponent},
   {path: "newItem", component: AddItemComponent},

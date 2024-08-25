@@ -52,3 +52,8 @@
 .login-form button:hover {
     background-color: #eea60b;
 }
+.error-message {
+    color: red;
+    font-weight: bold;
+    margin-bottom: 20px;
+}

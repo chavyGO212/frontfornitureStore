@@ -9,10 +9,13 @@ export class AuthService {
 
   private loggedIn: boolean = false;
 
+  private loginUrl = 'http://localhost:9090/api/logIn'; // Your backend login URL
+
   constructor(private http: HttpClient) { }
 
   login(email: string, password: string): Observable<any> {
-    return this.http.post('/api//users/{id}', { email, password }); 
+    // Send the email and password in the body of the POST request
+    return this.http.post(this.loginUrl, { email, password });
   }
 
   userlogin(): void {

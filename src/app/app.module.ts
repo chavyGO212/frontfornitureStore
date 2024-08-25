@@ -29,6 +29,7 @@ import { ColorComponent } from './color/color.component';
 import { AddItemComponent } from './add-item-component/add-item-component.component';
 import { PromotionComponent } from './promotion/promotion.component';
 import { CreditCardComponent } from './credit-card/credit-card.component';
+import { AuthService } from './log-in/auth.service';
 
 
 const routes: Routes = [

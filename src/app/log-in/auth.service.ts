@@ -27,10 +27,13 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    return this.loggedIn;
+    return !!localStorage.getItem('user');
+  }
+  logout(): void {
+    // Clear user data from localStorage
+    localStorage.removeItem('user');
   }
 }
-
 
 
 

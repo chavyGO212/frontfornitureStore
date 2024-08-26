@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { RegistrationService } from '../register/register.service'; // עדכן את המיקום בהתאם
 import { ActivatedRoute } from '@angular/router';
 import { RegistrationService } from '../register/register.service';
 import { AuthService } from '../log-in/auth.service'; 
@@ -20,6 +19,7 @@ export class PersonalLogInComponent implements OnInit  {
   ngOnInit(): void {
     // Retrieve user data from localStorage
     this.user = JSON.parse(localStorage.getItem('user') || '{}');
+    console.log(this.user);
 
     if (!this.user) {
       // If user data is not found, navigate to the login page

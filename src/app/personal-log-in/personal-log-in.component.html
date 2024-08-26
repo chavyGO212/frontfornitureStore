@@ -7,16 +7,15 @@
         <h1>אזור אישי ללקוח</h1>
         <section class="personal-details">
             <h2>פרטים אישיים</h2>
-            <p>{{ user.premmission_type_id }}</p>
             <p>{{user.firstName}}</p>
             <p>{{user.lastName}}</p>
             <p>{{user.email}}</p>
             <p>{{user.phone}} </p>
             <button routerLink="/update-p-d">עדכון פרטים אישיים</button><br>
-            <button routerLink="/orders" *ngIf="!isAdmin">  טיפול בהזמנות לקוחות</button><br>
-            <button routerLink="/stock" *ngIf="!isAdmin">  טיפול במלאי</button><br>
-            <button routerLink="/orders" *ngIf="!isAdmin"> פרטי לקוחות רשומים</button><br>
-            <button routerLink="/orders" *ngIf="!isAdmin">  דוח ניהול סלי קניות</button>
+            <button routerLink="/orders" *ngIf="user.permissionType === 'admin'">  טיפול בהזמנות לקוחות</button><br>
+            <button routerLink="/stock" *ngIf="user.permissionType === 'admin'">  טיפול במלאי</button><br>
+            <button routerLink="/orders" *ngIf="user.permissionType === 'admin'"> פרטי לקוחות רשומים</button><br>
+            <button routerLink="/orders" *ngIf="user.permissionType === 'admin'">  דוח ניהול סלי קניות</button>
         </section>
         
         <section class="payment-details">

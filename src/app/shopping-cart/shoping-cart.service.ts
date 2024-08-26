@@ -7,25 +7,38 @@ import { Observable } from 'rxjs';
 })
 export class ShopingCartService {
 
-  private apiUrl = 'http://localhost:9090/api/catalog/{id}'; 
+  private apiUrl = 'http://localhost:9090/api/cart';
 
   constructor(private http: HttpClient) { }
 
-  private items: any[] = [];
-
-  addToCart(product: any): void {
-    this.items.push(product);
+  addToCart(cartItem: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/add`, cartItem);
   }
 
-  getItems(): any[] {
-    return this.items;
+  getCartItems(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/items`);
   }
-
-  clearCart(): any[] {
-    this.items = [];
-    return this.items;
-  }
-
 }
+
+
+//   private apiUrl = 'http://localhost:9090/api/catalog/{id}'; 
+
+
+//   private items: any[] = [];
+
+//   addToCart(product: any): void {
+//     this.items.push(product);
+//   }
+
+//   getItems(): any[] {
+//     return this.items;
+//   }
+
+//   clearCart(): any[] {
+//     this.items = [];
+//     return this.items;
+//   }
+
+// }
 
   

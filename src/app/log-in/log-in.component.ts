@@ -42,25 +42,23 @@ export class LogInComponent implements OnInit {
         const { email, password } = this.loginForm.value;
         this.authService.login(email, password).subscribe(
             (response: any) => {
+                // Store user data in localStorage
+                localStorage.setItem('user', JSON.stringify(response));
+                
                 // Clear any existing error message
                 this.errorMessage = '';
+                
                 // Handle successful login and navigate
-                this.router.navigate(['/personal-log-in'], { 
-                    queryParams: { 
-                        id: response.customerId, 
-                        permissionType: response.permissions?.permissionStatus 
-                    } 
-                });
+                this.router.navigate(['/personal-log-in']);
             },
             (error: HttpErrorResponse) => {
-                // Handle specific error messages
                 if (error.status === 400) {
                     if (error.error === 'User not found with email: ' + email) {
-                        this.errorMessage = 'המייל לא קיים במערכת, אנא הרשם לאתר.';
+                        this.errorMessage = 'The email address is not registered. Please sign up first.';
                     } else if (error.error === 'Password is incorrect for this email.') {
-                        this.errorMessage = 'המייל וסיסמא לא תואמים';
+                        this.errorMessage = 'The password you entered is incorrect. Please try again.';
                     } else {
-                        this.errorMessage = 'המייל וסיסמא לא תואמים.';
+                        this.errorMessage = 'An error occurred during login. Please try again.';
                     }
                 } else {
                     this.errorMessage = 'An unexpected error occurred. Please try again later.';

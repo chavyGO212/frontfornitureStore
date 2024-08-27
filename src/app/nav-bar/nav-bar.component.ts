@@ -7,20 +7,20 @@ import { Router } from '@angular/router';
   templateUrl: './nav-bar.component.html',
   styleUrls: ['./nav-bar.component.css']
 })
-export class NavBarComponent implements OnInit{
+export class NavBarComponent implements OnInit {
   loggedIn: boolean = false;
 
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
-    this.loggedIn = this.authService.isLoggedIn();
+    // Subscribe to the user observable to get updates on login state
+    this.authService.user.subscribe(user => {
+      this.loggedIn = !!user; // Set loggedIn to true if user is not null
+    });
   }
+
   logout(): void {
-    this.authService.userlogout(); // Call the logout method in AuthService
+    this.authService.logout(); // Call the logout method in AuthService
     this.router.navigate(['/log-in']); // Navigate to the login page after logging out
   }
-
 }
-
-
-

@@ -18,6 +18,10 @@ export class ShopingCartService {
   getCartItems(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/items`);
   }
+
+  deleteFromCart(itemId: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/delete/${itemId}`);
+  }
 }
 
   

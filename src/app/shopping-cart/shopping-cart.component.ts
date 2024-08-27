@@ -45,6 +45,11 @@ export class ShoppingCartComponent implements OnInit {
         tap((items: any) => console.log(items))
     );
 }
+deleteItem(itemId: number) {
+  this.ShopingCartService.deleteFromCart(itemId).subscribe(() => {
+      this.cartItems = this.cartItems.filter(item => item.productID !== itemId);
+  });
+}
 
 
 }

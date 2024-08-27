@@ -14,8 +14,8 @@
             <button routerLink="/update-p-d">עדכון פרטים אישיים</button><br>
             <button routerLink="/orders" *ngIf="user.permissionType === 'admin'">  טיפול בהזמנות לקוחות</button><br>
             <button routerLink="/stock" *ngIf="user.permissionType === 'admin'">  טיפול במלאי</button><br>
-            <button routerLink="/registerd-customers" *ngIf="user.permissionType === 'admin'"> פרטי לקוחות רשומים</button><br>
-            <button routerLink="/manag-shoping-cart" *ngIf="user.permissionType === 'admin'">  דוח ניהול סלי קניות</button>
+            <button routerLink="/manage-clients" *ngIf="user.permissionType === 'admin'"> פרטי לקוחות רשומים</button><br>
+            <button routerLink="/manage-shoping-cart" *ngIf="user.permissionType === 'admin'">  דוח ניהול סלי קניות</button>
         </section>
         
         <section class="payment-details">

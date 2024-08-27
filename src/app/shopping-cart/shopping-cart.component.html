@@ -8,30 +8,37 @@
                     <th>כמות</th>
                     <th>צבע</th>
                     <th>מחיר ליחידה</th>
+                    <th>הנחה</th>
                     <th>סה"כ</th>
+                    <th>מחק</th>
                 </tr>
             </thead>
             <tbody>
-                <tbody>
-                    <ng-container *ngIf="(getCartItems() | async) as cartItems">
-                      <tr *ngIf="cartItems.length === 0">
-                        <td colspan="5">אין פריטים בסל</td>
-                      </tr>
-                      <tr *ngFor="let item of cartItems">
-                        <td>{{ item.name }}</td>
-                        <td>{{ item.quantity }}</td><!-- להוסיף אופציה הוספה והורדה של כמות-->
+                <ng-container *ngIf="cartItems.length > 0; else noItems">
+                    <tr *ngFor="let item of cartItems; let i = index">
+                        <td>{{ item.productName }}</td>
+                        <td>
+                            <button (click)="decreaseQuantity(i)">-</button>
+                            {{ quantities[i] }}
+                            <button (click)="increaseQuantity(i)">+</button>
+                        </td>
                         <td>{{ item.color }}</td>
                         <td>{{ item.price }}</td>
-                        <td>{{ item.totalPrice }}</td>
+                        <td>{{ item.promotion }}%</td>
+                        <td>{{ quantities[i] * item.price }}</td>
                         <td>
-                            <button (click)="deleteItem(item.productID)">מחק</button>
-                          </td>
-                      </tr>
-                    </ng-container>
-                  </tbody>
+                            <button (click)="deleteItem(i)">מחק</button>
+                        </td>
+                    </tr>
+                </ng-container>
+                <ng-template #noItems>
+                    <tr>
+                        <td colspan="7">אין פריטים בסל</td>
+                    </tr>
+                </ng-template>
+            </tbody>
         </table>
+        <p><strong>סה"כ לתשלום: {{ getTotalAmount() | currency:'ILS' }}</strong></p>
         <button routerLink="/payment" class="checkout-button">מעבר לתשלום</button>
-        </div>
+    </div>
 </body>
-
-

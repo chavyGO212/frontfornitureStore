@@ -15,6 +15,8 @@ import { OrdersComponent } from './orders/orders.component';
 import { StockComponent } from './stock/stock.component';
 import {AddItemComponent} from './add-item-component/add-item-component.component'
 import { ColorComponent } from './color/color.component';
+import { ManageClientsComponent } from './manage-clients/manage-clients.component';
+import { ManageShopingCartComponent } from './manage-shoping-cart/manage-shoping-cart.component';
 
 const routes: Routes = [
   {path: "", component: HomeComponent},
@@ -31,7 +33,9 @@ const routes: Routes = [
   {path: "orders", component: OrdersComponent},
   {path: "stock", component: StockComponent},
   {path: "newItem", component: AddItemComponent},
-  {path: "color", component: ColorComponent}
+  {path: "color", component: ColorComponent},
+  {path: "manage-clients", component: ManageClientsComponent},
+  {path: "manage-shoping-cart", component:  ManageShopingCartComponent}
   ]
 
 @NgModule({

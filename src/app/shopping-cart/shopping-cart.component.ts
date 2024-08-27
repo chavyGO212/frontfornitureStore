@@ -9,12 +9,18 @@ import { Observable, tap } from 'rxjs';
 })
 export class ShoppingCartComponent implements OnInit {
   cartItems: any[] = [];
+  quantities: number[] = [];
   totalAmount: number = 0;
+
 
   constructor(private ShopingCartService: ShopingCartService) {}
 
   ngOnInit(): void {
     this.loadCartItems();
+    this.getCartItems().subscribe(items => {
+      this.cartItems = items;
+      this.quantities = items.map(() => 1); 
+    });
   }
 
   loadCartItems(): void {
@@ -28,28 +34,40 @@ export class ShoppingCartComponent implements OnInit {
     this.totalAmount = this.cartItems.reduce((acc, item) => acc + item.quantity * item.product.price, 0);
   }
 
-  decreaseQuantity(item: any): void {
-    if (item.quantity > 1) {
-      item.quantity--;
-      this.calculateTotalAmount();
+  getTotalAmount(): number {
+    return this.cartItems.reduce((total, item, index) => 
+      total + (this.quantities[index] * item.price), 0);
+  }
+
+  decreaseQuantity(index: number): void {
+    if (this.quantities[index] > 1) {
+      this.quantities[index]--;
     }
   }
 
-  increaseQuantity(item: any): void {
-    item.quantity++;
-    this.calculateTotalAmount();
+  increaseQuantity(index: number): void {
+    this.quantities[index]++;
   }
+
 
   getCartItems(): Observable<any[]> {
     return this.ShopingCartService.getCartItems().pipe(
         tap((items: any) => console.log(items))
     );
 }
-deleteItem(itemId: number) {
+deleteItem(index: number): void {
+  const itemId = this.cartItems[index].id;
   this.ShopingCartService.deleteFromCart(itemId).subscribe(() => {
-      this.cartItems = this.cartItems.filter(item => item.productID !== itemId);
+    this.cartItems.splice(index, 1);
+    this.quantities.splice(index, 1);
   });
 }
-
-
+// deleteItem(itemId: number) {
+//   this.ShopingCartService.deleteFromCart(itemId).subscribe(() => {
+//       this.cartItems = this.cartItems.filter(item => item.productID !== itemId);
+//   });
+// }
 }
+
+  
+

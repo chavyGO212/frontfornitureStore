@@ -55,16 +55,21 @@ export class ItemComponent implements OnInit {
   //   }
   
   addToCart(product: any) {
+    const customerId = localStorage.getItem('currentUserId'); 
     const cartItem = {
+      customerId: customerId,
         name: product.productName,
         price: product.price,
         quantity: this.quantity,
         color: product.color,
         totalPrice: product.price * this.quantity
     };
-    this.shopingCartService.addToCart(cartItem).subscribe(() => {
-        this.router.navigate(['/shopping-cart']); 
+    this.shopingCartService.addToCart(cartItem).subscribe(response => {
+      this.router.navigate(['/shopping-cart']); 
+    }, error => {
+      console.error('Error adding to cart:', error);
     });
-}
+  }
+  
 }
 

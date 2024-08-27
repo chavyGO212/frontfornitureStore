@@ -7,7 +7,7 @@ import { manageShopingCartService } from './manage-shoping-cart.service';
   styleUrls: ['./manage-shoping-cart.component.css']
 })
 export class ManageShopingCartComponent implements OnInit{
-  manageShopingCart: any[] = [];//דוגמא לקבלת נתונים בשורה 25
+  manageShopingCart: any[] = [];
   constructor(private manageShopingCartService: manageShopingCartService) {}
     ngOnInit(): void {
       this.manageShopingCartService.getData().subscribe(

@@ -13,7 +13,8 @@ export class TableGaleryComponent implements OnInit {
 
   ngOnInit() {
     this.catalogService.getItems().subscribe(data => {
-      this.items = data;
+      this.items = data.filter(item => item.typeOfItem === 'TABLE');
     });
   }
 }
+

@@ -10,11 +10,11 @@ export class ChairGaleryComponent {
   items: any[] = [];
   constructor(private ChairGalleryService: ChairGalleryService) {}
 
-  ngOnInit() {
-    this.ChairGalleryService.getItems().subscribe(data => {
-      this.items = data;
+  ngOnInit(): void {
+    this.ChairGalleryService.getItems().subscribe((data: any[]) => {
+        this.items = data.filter(item => item.typeOfItem === 'CHAIR');
     });
-  }
+}
 }
 
 

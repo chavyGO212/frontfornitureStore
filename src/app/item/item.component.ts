@@ -47,22 +47,12 @@ export class ItemComponent implements OnInit {
     }
   }
 
-  // addToCart(product: any): void {
-  //   if (this.isLoggedIn) {
-  //     this.shopingCartService.addToCart({ ...product, quantity: this.quantity });
-  //   } else {
-  //     alert('עליך להתחבר כדי להוסיף לסל הקניות');
-  //   }
   
-  addToCart(product: any) {
-    const customerId = localStorage.getItem('currentUserId'); 
+  
+  addToCart(product: any) { 
     const cartItem = {
-      customerId: customerId,
-        name: product.productName,
-        price: product.price,
+      productId: product.productID,
         quantity: this.quantity,
-        color: product.color,
-        totalPrice: product.price * this.quantity
     };
     this.shopingCartService.addToCart(cartItem).subscribe(response => {
       this.router.navigate(['/shopping-cart']); 

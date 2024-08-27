@@ -23,6 +23,9 @@
                         <td>{{ item.color }}</td>
                         <td>{{ item.price }}</td>
                         <td>{{ item.totalPrice }}</td>
+                        <td>
+                            <button (click)="deleteItem(item.productID)">מחק</button>
+                          </td>
                       </tr>
                     </ng-container>
                   </tbody>

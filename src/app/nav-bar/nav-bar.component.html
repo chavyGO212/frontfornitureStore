@@ -5,5 +5,7 @@
     <button routerLink="chair-galery" class="borderless-button" class="right-butten">כסאות</button>
     <button routerLink="conect"  class="borderless-button" class="right-butten">צור קשר</button>
     <button routerLink="shopping-cart" class="borderless-button" class="left-butten">סל קניות</button>
-    <button routerLink="log-in" class="borderless-button" class="left-butten">התחבר</button><!--'בחיבור למערכת יש להחליף את הכפתור ל'התנתק-->
+    <!-- <button routerLink="log-in" class="borderless-button" class="left-butten">התחבר</button> -->
+    <button *ngIf="loggedIn" (click)="logout()">Logout</button>
+    <button *ngIf="!loggedIn" routerLink="/log-in">התחבר</button> 
 </nav>

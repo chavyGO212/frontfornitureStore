@@ -1,5 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router'; // ייבוא Router
 import { ActivatedRoute } from '@angular/router';
 import { itemService } from '../item/item.service';
 import { ShopingCartService } from '../shopping-cart/shoping-cart.service';
@@ -18,8 +19,9 @@ export class ItemComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private itemService: itemService,
-    private cartService: ShopingCartService,
-    private authService: AuthService 
+    private shopingCartService: ShopingCartService,
+    private authService: AuthService,
+    private router: Router 
   ) {}
 
     ngOnInit(): void {
@@ -45,11 +47,24 @@ export class ItemComponent implements OnInit {
     }
   }
 
-  addToCart(product: any): void {
-    if (this.isLoggedIn) {
-      this.cartService.addToCart({ ...product, quantity: this.quantity });
-    } else {
-      alert('עליך להתחבר כדי להוסיף לסל הקניות');
-    }
-  }
+  // addToCart(product: any): void {
+  //   if (this.isLoggedIn) {
+  //     this.shopingCartService.addToCart({ ...product, quantity: this.quantity });
+  //   } else {
+  //     alert('עליך להתחבר כדי להוסיף לסל הקניות');
+  //   }
+  
+  addToCart(product: any) {
+    const cartItem = {
+        name: product.productName,
+        price: product.price,
+        quantity: this.quantity,
+        color: product.color,
+        totalPrice: product.price * this.quantity
+    };
+    this.shopingCartService.addToCart(cartItem).subscribe(() => {
+        this.router.navigate(['/shopping-cart']); 
+    });
 }
+}
+

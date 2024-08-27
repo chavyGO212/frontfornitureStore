@@ -24,6 +24,7 @@ export class AuthService {
 
   userlogout(): void {
     this.loggedIn = false;
+    this.logout();
   }
 
   isLoggedIn(): boolean {
@@ -34,6 +35,7 @@ export class AuthService {
     localStorage.removeItem('user');
   }
 }
+
 
 
 

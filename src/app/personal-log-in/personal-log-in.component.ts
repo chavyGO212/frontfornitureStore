@@ -19,16 +19,13 @@ export class PersonalLogInComponent implements OnInit  {
   ngOnInit(): void {
     // Retrieve user data from localStorage
     this.user = JSON.parse(localStorage.getItem('user') || '{}');
-    console.log(this.user);
-
     if (!this.user) {
-      // If user data is not found, navigate to the login page
       this.router.navigate(['/log-in']);
-    }
+   }
   }
 
   logout(): void {
-    this.authService.logout(); // Call the logout method in AuthService
+    this.authService.userlogout(); // Call the logout method in AuthService
     this.router.navigate(['/log-in']); // Navigate to the login page after logging out
   }
 }

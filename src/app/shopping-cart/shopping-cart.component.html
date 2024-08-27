@@ -1,4 +1,3 @@
-
 <body>
     <div class="container">
         <h2>סל הקניות</h2>
@@ -13,39 +12,23 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>כיסא כתר</td>
-                    <td>
-                        <div class="quantity">
-                            <button>-</button>
-                            <input type="text" value="2">
-                            <button>+</button>
-                        </div>
-                    </td>
-                    <td>שחור</td>
-                    <td>30 ש"ח</td>
-                    <td>60 ש"ח</td>
-                </tr>
-                <tr>
-                    <td>שולחן מטבח</td>
-                    <td>
-                        <div class="quantity">
-                            <button>-</button>
-                            <input type="text" value="1">
-                            <button>+</button>
-                        </div>
-                    </td>
-                    <td>לבן</td>
-                    <td>1500 ש"ח</td>
-                    <td>1500 ש"ח</td>
-                </tr>
-            </tbody>
+                <tbody>
+                    <ng-container *ngIf="(getCartItems() | async) as cartItems">
+                      <tr *ngIf="cartItems.length === 0">
+                        <td colspan="5">אין פריטים בסל</td>
+                      </tr>
+                      <tr *ngFor="let item of cartItems">
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.quantity }}</td><!-- להוסיף אופציה הוספה והורדה של כמות-->
+                        <td>{{ item.color }}</td>
+                        <td>{{ item.price }}</td>
+                        <td>{{ item.totalPrice }}</td>
+                      </tr>
+                    </ng-container>
+                  </tbody>
         </table>
-        <div class="total">
-            <span>סה"כ לתשלום:</span>
-            <span>1560 ש"ח</span>
-        </div>
         <button routerLink="/payment" class="checkout-button">מעבר לתשלום</button>
-    </div>
+        </div>
 </body>
+
 

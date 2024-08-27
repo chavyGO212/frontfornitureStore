@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ShopingCartService } from './shoping-cart.service';
+import { Observable, tap } from 'rxjs';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -38,4 +39,12 @@ export class ShoppingCartComponent implements OnInit {
     item.quantity++;
     this.calculateTotalAmount();
   }
+
+  getCartItems(): Observable<any[]> {
+    return this.ShopingCartService.getCartItems().pipe(
+        tap((items: any) => console.log(items))
+    );
+}
+
+
 }

@@ -1,37 +1,39 @@
-<body>
-    <div class="container">
-        <h2>סל הקניות</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>שם מוצר</th>
-                    <th>כמות</th>
-                    <th>צבע</th>
-                    <th>מחיר ליחידה</th>
-                    <th>סה"כ</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tbody>
-                    <ng-container *ngIf="(getCartItems() | async) as cartItems">
-                      <tr *ngIf="cartItems.length === 0">
-                        <td colspan="5">אין פריטים בסל</td>
-                      </tr>
-                      <tr *ngFor="let item of cartItems">
-                        <td>{{ item.name }}</td>
-                        <td>{{ item.quantity }}</td><!-- להוסיף אופציה הוספה והורדה של כמות-->
-                        <td>{{ item.color }}</td>
-                        <td>{{ item.price }}</td>
-                        <td>{{ item.totalPrice }}</td>
-                        <td>
-                            <button (click)="deleteItem(item.productID)">מחק</button>
-                          </td>
-                      </tr>
-                    </ng-container>
-                  </tbody>
-        </table>
-        <button routerLink="/payment" class="checkout-button">מעבר לתשלום</button>
-        </div>
-</body>
-
-
+<div class="container">
+  <h2>סל הקניות</h2>
+  <table>
+      <thead>
+          <tr>
+              <th>שם מוצר</th>
+              <th>כמות</th>
+              <th>צבע</th>
+              <th>מחיר ליחידה</th>
+              <th>סה"כ</th>
+              <th>פעולות</th>
+          </tr>
+      </thead>
+      <tbody>
+          <ng-container *ngIf="cartItems.length; else emptyCart">
+              <tr *ngFor="let item of cartItems">
+                  <td>{{ item.product.name }}</td>
+                  <td>
+                      <button (click)="decreaseQuantity(item)">-</button>
+                      {{ item.quantity }}
+                      <button (click)="increaseQuantity(item)">+</button>
+                  </td>
+                  <td>{{ item.product.color }}</td>
+                  <td>{{ item.product.price }}</td>
+                  <td>{{ item.quantity * item.product.price }}</td>
+                  <td>
+                      <button (click)="deleteItem(item.product.id)">מחק</button>
+                  </td>
+              </tr>
+          </ng-container>
+          <ng-template #emptyCart>
+              <tr>
+                  <td colspan="6">אין פריטים בסל</td>
+              </tr>
+          </ng-template>
+      </tbody>
+  </table>
+  <button (click)="completeCart()" class="checkout-button">מעבר לתשלום</button>
+</div>

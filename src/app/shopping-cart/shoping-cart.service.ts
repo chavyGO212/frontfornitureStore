@@ -11,17 +11,26 @@ export class ShopingCartService {
 
   constructor(private http: HttpClient) { }
 
-  addToCart(cartItem: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/add`, cartItem);
+  addToCart(customerId: number, productId: number, quantity: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/${customerId}/add`, null, {
+      params: {
+        productId: productId.toString(),
+        quantity: quantity.toString()
+      }
+    });
   }
 
-  getCartItems(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/items`);
+  deleteCartItem(customerId: number, productId: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${customerId}/delete`, {
+      params: { productId: productId.toString() }
+    });
   }
 
-  deleteFromCart(itemId: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/delete/${itemId}`);
+  completeCart(customerId: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/${customerId}/complete`, null);
+  }
+
+  getCartItems(customerId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/${customerId}/items`);
   }
 }
-
-  

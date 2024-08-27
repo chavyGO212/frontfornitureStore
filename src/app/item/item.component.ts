@@ -1,10 +1,8 @@
-
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router'; // ייבוא Router
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { itemService } from '../item/item.service';
 import { ShopingCartService } from '../shopping-cart/shoping-cart.service';
-import { AuthService } from '../log-in/auth.service'; // שירות לבדיקה אם המשתמש רשום
+import { AuthService } from '../log-in/auth.service';
 
 @Component({
   selector: 'app-item',
@@ -24,18 +22,22 @@ export class ItemComponent implements OnInit {
     private router: Router 
   ) {}
 
-    ngOnInit(): void {
-      const id = this.route.snapshot.paramMap.get('productID');
-      if (id) {
-        this.itemService.getProductById(id).subscribe(data => {
+  ngOnInit(): void {
+    const id = this.route.snapshot.paramMap.get('productID');
+    if (id) {
+      this.itemService.getProductById(id).subscribe(
+        data => {
           this.product = data;
-        });
-      } else {
-        console.error('ID is null');
-      }
-      this.isLoggedIn = this.authService.isLoggedIn();
+        },
+        error => {
+          console.error('Error fetching product data:', error);
+        }
+      );
+    } else {
+      console.error('ID is null');
     }
-    
+    this.isLoggedIn = this.authService.isLoggedIn();
+  }
 
   increaseQuantity(): void {
     this.quantity++;
@@ -47,24 +49,26 @@ export class ItemComponent implements OnInit {
     }
   }
 
-  // addToCart(product: any): void {
-  //   if (this.isLoggedIn) {
-  //     this.shopingCartService.addToCart({ ...product, quantity: this.quantity });
-  //   } else {
-  //     alert('עליך להתחבר כדי להוסיף לסל הקניות');
-  //   }
+  addToCart(): void {
+    if (this.isLoggedIn && this.product) {
+      const user = JSON.parse(localStorage.getItem('user') || '{}');
+      const customerId = user.id; // Assuming the user object stored in localStorage has an 'id' field
   
-  addToCart(product: any) {
-    const cartItem = {
-        name: product.productName,
-        price: product.price,
-        quantity: this.quantity,
-        color: product.color,
-        totalPrice: product.price * this.quantity
-    };
-    this.shopingCartService.addToCart(cartItem).subscribe(() => {
-        this.router.navigate(['/shopping-cart']); 
-    });
+      if (!customerId) {
+        alert('User ID not found. Please log in again.');
+        this.router.navigate(['/log-in']);
+        return;
+      }
+  
+      const productId = this.product.productID;
+      this.shopingCartService.addToCart(customerId, productId, this.quantity).subscribe(() => {
+        this.router.navigate(['/shopping-cart']);
+      });
+    } else {
+      alert('עליך להתחבר כדי להוסיף לסל הקניות');
+      this.router.navigate(['/log-in']);
+    }
+  }
+  
+  
 }
-}
-

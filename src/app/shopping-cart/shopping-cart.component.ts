@@ -9,8 +9,9 @@ import { Observable } from 'rxjs';
 })
 export class ShoppingCartComponent implements OnInit {
   cartItems: any[] = [];
+  quantities: number[] = [];
   totalAmount: number = 0;
-  customerId: number = 1; // This should be dynamically set to the logged-in user
+
 
   constructor(private shopingCartService: ShopingCartService) {}
 
@@ -18,6 +19,10 @@ export class ShoppingCartComponent implements OnInit {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     this.customerId = user.id; // Retrieve the logged-in user's ID from localStorage
     this.loadCartItems();
+    this.getCartItems().subscribe(items => {
+      this.cartItems = items;
+      this.quantities = items.map(() => 1); 
+    });
   }
   
 
@@ -32,32 +37,40 @@ export class ShoppingCartComponent implements OnInit {
     this.totalAmount = this.cartItems.reduce((acc, item) => acc + item.quantity * item.product.price, 0);
   }
 
-  decreaseQuantity(item: any): void {
-    if (item.quantity > 1) {
-      this.updateCartItemQuantity(item.product.id, item.quantity - 1);
+  getTotalAmount(): number {
+    return this.cartItems.reduce((total, item, index) => 
+      total + (this.quantities[index] * item.price), 0);
+  }
+
+  decreaseQuantity(index: number): void {
+    if (this.quantities[index] > 1) {
+      this.quantities[index]--;
     }
   }
 
-  increaseQuantity(item: any): void {
-    this.updateCartItemQuantity(item.product.id, item.quantity + 1);
+  increaseQuantity(index: number): void {
+    this.quantities[index]++;
   }
 
-  updateCartItemQuantity(productId: number, quantity: number): void {
-    this.shopingCartService.addToCart(this.customerId, productId, quantity).subscribe(() => {
-      this.loadCartItems();
-    });
-  }
 
-  deleteItem(productId: number): void {
-    this.shopingCartService.deleteCartItem(this.customerId, productId).subscribe(() => {
-      this.loadCartItems();
-    });
-  }
-
-  completeCart(): void {
-    this.shopingCartService.completeCart(this.customerId).subscribe(() => {
-      alert('Cart completed successfully!');
-      this.loadCartItems(); // Optionally reload or clear cart items
-    });
-  }
+  getCartItems(): Observable<any[]> {
+    return this.ShopingCartService.getCartItems().pipe(
+        tap((items: any) => console.log(items))
+    );
 }
+deleteItem(index: number): void {
+  const itemId = this.cartItems[index].id;
+  this.ShopingCartService.deleteFromCart(itemId).subscribe(() => {
+    this.cartItems.splice(index, 1);
+    this.quantities.splice(index, 1);
+  });
+}
+// deleteItem(itemId: number) {
+//   this.ShopingCartService.deleteFromCart(itemId).subscribe(() => {
+//       this.cartItems = this.cartItems.filter(item => item.productID !== itemId);
+//   });
+// }
+}
+
+  
+

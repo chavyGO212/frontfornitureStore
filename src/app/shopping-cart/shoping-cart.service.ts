@@ -9,28 +9,20 @@ export class ShopingCartService {
 
   private apiUrl = 'http://localhost:9090/api/cart';
 
+  userID = JSON.parse(localStorage.getItem('user') || 'null').id;
+
+
   constructor(private http: HttpClient) { }
 
-  addToCart(customerId: number, productId: number, quantity: number): Observable<any> {
-    return this.http.post(`${this.apiUrl}/${customerId}/add`, null, {
-      params: {
-        productId: productId.toString(),
-        quantity: quantity.toString()
-      }
-    });
+  addToCart(cartItem: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/${this.userID}/add`, cartItem);
   }
 
-  deleteCartItem(customerId: number, productId: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${customerId}/delete`, {
-      params: { productId: productId.toString() }
-    });
+  getCartItems(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/${this.userID}/items`);
   }
 
-  completeCart(customerId: number): Observable<any> {
-    return this.http.post(`${this.apiUrl}/${customerId}/complete`, null);
-  }
-
-  getCartItems(customerId: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/${customerId}/items`);
+  deleteFromCart(itemId: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${this.userID}/delete/${itemId}`);
   }
 }

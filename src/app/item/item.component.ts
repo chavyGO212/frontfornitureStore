@@ -49,26 +49,19 @@ export class ItemComponent implements OnInit {
     }
   }
 
-  addToCart(): void {
-    if (this.isLoggedIn && this.product) {
-      const user = JSON.parse(localStorage.getItem('user') || '{}');
-      const customerId = user.id; // Assuming the user object stored in localStorage has an 'id' field
   
-      if (!customerId) {
-        alert('User ID not found. Please log in again.');
-        this.router.navigate(['/log-in']);
-        return;
-      }
   
-      const productId = this.product.productID;
-      this.shopingCartService.addToCart(customerId, productId, this.quantity).subscribe(() => {
-        this.router.navigate(['/shopping-cart']);
-      });
-    } else {
-      alert('עליך להתחבר כדי להוסיף לסל הקניות');
-      this.router.navigate(['/log-in']);
-    }
+  addToCart(product: any) { 
+    const cartItem = {
+      productId: product.productID,
+        quantity: this.quantity,
+    };
+    this.shopingCartService.addToCart(cartItem).subscribe(response => {
+      this.router.navigate(['/shopping-cart']); 
+    }, error => {
+      console.error('Error adding to cart:', error);
+    });
   }
   
-  
 }
+

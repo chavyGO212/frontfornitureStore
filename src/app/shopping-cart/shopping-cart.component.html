@@ -23,9 +23,11 @@
                             <button (click)="increaseQuantity(i)">+</button>
                         </td>
                         <td>{{ item.color }}</td>
-                        <td>{{ item.price }}</td>
+                        <td>{{ item.price || 0 }}</td>
                         <td>{{ item.promotion }}%</td>
-                        <td>{{ quantities[i] * item.price }}</td>
+                        <td>
+                            {{ calculateTotalForItem(item, quantities[i]) }}
+                        </td>
                         <td>
                             <button (click)="deleteItem(i)">מחק</button>
                         </td>
@@ -37,6 +39,7 @@
                     </tr>
                 </ng-template>
             </tbody>
+            
         </table>
         <p><strong>סה"כ לתשלום: {{ getTotalAmount() | currency:'ILS' }}</strong></p>
         <button routerLink="/payment" class="checkout-button">מעבר לתשלום</button>

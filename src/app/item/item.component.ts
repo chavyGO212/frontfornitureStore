@@ -52,16 +52,20 @@ export class ItemComponent implements OnInit {
   
   
   addToCart(product: any) { 
-    const cartItem = {
-      productId: product.productID,
-        quantity: this.quantity,
-    };
-    this.shopingCartService.addToCart(cartItem).subscribe(response => {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    const customerId = user.id; // Retrieve the logged-in user's ID from localStorage
+    
+    const productId = product.productID;
+    const quantity = this.quantity;
+  
+    this.shopingCartService.addToCart(customerId, productId, quantity).subscribe(response => {
       this.router.navigate(['/shopping-cart']); 
     }, error => {
       console.error('Error adding to cart:', error);
     });
   }
+  
+  
   
 }
 

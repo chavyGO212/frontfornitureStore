@@ -25,6 +25,11 @@ export class ShopingCartService {
   deleteFromCart(itemId: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${this.userID}/delete/${itemId}`);
   }
+
+  getOrderDetails(customerID: number, orderID: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/${customerID}/order/${orderID}`);
+}
+
 }
 
   

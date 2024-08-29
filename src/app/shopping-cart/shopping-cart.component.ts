@@ -106,39 +106,37 @@ export class ShoppingCartComponent implements OnInit {
       this.calculateTotalAmount();
     });
   }
-
   submitOrder(): void {
     const orderItems = this.cartItems.map(item => ({
-      productId: item.productID || item.productId,
-      quantity: item.quantity
+        productId: item.productID || item.productId,
+        quantity: item.quantity
     }));
 
     const order = {
-      customerId: this.customerId,
-      totalPrice: this.totalAmount,
-      delivery: this.deliveryOption === 'delivery',
-      address: this.deliveryOption === 'delivery' ? 'Please update address' : 'Pickup location',
-      items: orderItems  // Include the items in the order request
+        customerId: this.customerId,
+        totalPrice: this.totalAmount,
+        delivery: this.deliveryOption === 'delivery',
+        address: this.deliveryOption === 'delivery' ? 'Please update address' : 'Pickup location',
+        items: orderItems  // Include the items in the order request
     };
 
     console.log('Submitting order:', order);  // Log the order payload
 
     this.shoppingCartService.createOrder(order).subscribe(
-      () => {
-        console.log('Order submitted successfully');
-        // Redirect to payment page
-        this.router.navigate(['/payment', order.customerId]);
-        // Clear the cart after order submission
-        this.shoppingCartService.clearCart(this.customerId).subscribe(() => {
-          console.log('Shopping cart cleared');
-        });
-      },
-      (error: HttpErrorResponse) => {
-        console.error('Error submitting order:', error.message);
-        console.log('Full error object:', error);
-      }
+        (response: any) => {
+            console.log('Order submitted successfully');
+            console.log('Order Response:', response);
+            this.router.navigate(['/payment'], { queryParams: { orderId: response.orderId, amount: response.totalPrice } });
+            this.shoppingCartService.clearCart(this.customerId).subscribe(() => {
+                console.log('Shopping cart cleared');
+            });
+        },
+        (error: HttpErrorResponse) => {
+            console.error('Error submitting order:', error.message);
+            console.log('Full error object:', error);
+        }
     );
-  }
+}
 
   calculateTotalForItem(item: any, quantity: number): number {
     const price = item.price || 0;

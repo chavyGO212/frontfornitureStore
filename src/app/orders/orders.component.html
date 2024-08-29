@@ -1,43 +1,31 @@
-
-<body>
-    <div class="container">
-        <header class="header">
-            <h1>הזמנות</h1>
-        </header>
-        <main class="main-content">
-            <table class="order-table">
-                <thead>
-                    <tr>
-                        <th>שם מוצר</th>
-                        <th>כמות</th>
-                        <th>מחיר ליחידה</th>
-                        <th>סה"כ</th>
-                        <th>עיר</th>
-                        <th>רחוב</th>
-                        <th>בניין</th>
-                        <th>בית</th>
-                        <th>טלפון</th>
-                        <th>הערות להזמנה</th>
-                        <th>משלוח/איסוף עצמי</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let order of orders">
-                        <td>{{order.name}}</td>
-                        <td>{{order.amount}}</td>
-                        <td>{{order.price_one}}</td>
-                        <td>{{order.price}}</td>
-                        <td>{{order.city}}</td>
-                        <td>{{order.street}}</td>
-                        <td>{{order.building}}</td>
-                        <td>{{order.home}}</td>
-                        <td>{{order.phone}}</td>
-                        <td>{{order.comments}}</td>
-                        <td>{{order.Delivery_type}}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </main>
-    </div>
-</body>
-
+<div class="container">
+    <header class="header">
+        <h1>Your Orders</h1>
+    </header>
+    <main class="main-content">
+        <table class="order-table">
+            <thead>
+                <tr>
+                    <th>מספר הזמנה</th>
+                    <th>כתובת</th>
+                    <th>סה"כ להזמנה</th>
+                    <th>סטאטוס</th>
+                    <th>פעולות</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let order of orders" (click)="viewOrderItems(order.orderId)">
+                    <td>{{ order.orderId }}</td>
+                    <td>{{ order.address }}</td>
+                    <td>{{ order.totalPrice | currency:'USD' }}</td>
+                    <td>{{ order.status }}</td>
+                    <td>
+                        <button *ngIf="order.status === 'UNPAID'" class="action-button pay-button" (click)="goToPayment(order, $event)">Pay</button>
+                        <button *ngIf="order.delivery && order.status === 'UNPAID'" class="action-button update-button" (click)="updateAddress(order.orderId, $event)">Update Address</button>
+                        <button *ngIf="order.status === 'UNPAID'" class="action-button cancel-button" (click)="cancelOrder(order.orderId, $event)">Cancel</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+</div>

@@ -1,54 +1,54 @@
 import { Component, OnInit } from '@angular/core';
-import { orderService } from './order.service';
-
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { OrdersService } from './orders.service';
 
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
   styleUrls: ['./orders.component.css']
 })
-export class OrdersComponent implements OnInit{
-  orders: any[] = [];//דוגמא לקבלת נתונים בשורה 25
-  constructor(private orderService: orderService) {}
-    ngOnInit(): void {
-      this.orderService.getData().subscribe(
-        (response) => {
-          this.orders = response;
-        },
-        (error) => {
-          console.error('Error fetching data:', error);
-        }
+export class OrdersComponent implements OnInit {
+  orders: any[] = [];
+  user: any;
+
+  constructor(private http: HttpClient, private router: Router, private ordersService: OrdersService) {}
+
+  ngOnInit(): void {
+    this.user = JSON.parse(localStorage.getItem('user') || '{}');
+    this.fetchOrders();
+  }
+
+  fetchOrders() {
+    this.ordersService.getUserOrders(this.user.id).subscribe(
+      (data: any[]) => this.orders = data,
+      (error: any) => console.error('Failed to fetch orders', error)
+    );
+  }
+
+  viewOrderItems(orderId: number) {
+    this.router.navigate(['/order-items'], { queryParams: { orderId } });
+  }
+
+  goToPayment(order: any, event: Event) {
+    event.stopPropagation();
+    this.router.navigate(['/payment'], { queryParams: { orderId: order.orderId, amount: order.totalPrice } });
+  }
+
+  updateAddress(orderId: number, event: Event) {
+    event.stopPropagation();
+    const newAddress = prompt("Enter new address:");
+    if (newAddress) {
+      this.ordersService.updateOrderAddress(orderId, newAddress, this.user.id).subscribe(
+        () => this.fetchOrders()
       );
     }
-  
-    }
-  /*orders=[
-    {name:'כסא כתר מעוצב',
-      amount: 2,
-      price_one: 60,
-      price: 120,
-      city: 'jm',
-      street: '123',
-      building: 6,
-      home: 5,
-      phone: 257635845,
-      comments: 'jhfgdhjfbhdjnfbhdj',
-      Delivery_type: 'delivery'
-    },
-    {name:'כסא כתר מעוצב',
-      amount: 2,
-      price_one: 60,
-      price: 120,
-      city: 'jm',
-      street: '123',
-      building: 6,
-      home: 5,
-      phone: 257635845,
-      comments: 'jhfgdhjfbhdjnfbhdj',
-      Delivery_type: 'delivery'
-    }
-  ]*/
-   
-   
-    
-    
+  }
+
+  cancelOrder(orderId: number, event: Event) {
+    event.stopPropagation();
+    this.ordersService.cancelOrder(orderId).subscribe(
+      () => this.fetchOrders()
+    );
+  }
+}

@@ -36,8 +36,11 @@ const routes: Routes = [
   { path: 'color', component: ColorComponent }, // Route to   ColorComponent
   { path: '', redirectTo: '/color', pathMatch: 'full' },
   {path:'log-in',component:LogInComponent}, // Optional: Redirect to 'color' as default
-  {path:'promotion', component: PromotionComponent}
-  // Route to   PromotionComponent
+  {path:'promotion', component: PromotionComponent},
+  { path: 'orders', component: OrdersComponent },
+  { path: 'payment', component: PaymentComponent },
+  { path: '', redirectTo: '/orders', pathMatch: 'full' },
+
 ]
 
 @NgModule({

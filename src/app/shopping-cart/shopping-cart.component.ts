@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ShopingCartService } from './shoping-cart.service';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { ShoppingCartService } from './shopping-cart.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -13,8 +13,10 @@ export class ShoppingCartComponent implements OnInit {
   quantities: number[] = [];
   totalAmount: number = 0;
   customerId: number;
+  deliveryOption: string = 'pickup'; // Default to pickup
+  deliveryFee: number = 100; // Delivery fee
 
-  constructor(private shopingCartService: ShopingCartService) {}
+  constructor(private shoppingCartService: ShoppingCartService, private router: Router) {}
 
   ngOnInit(): void {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
@@ -23,75 +25,124 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   loadCartItems(): void {
-    this.shopingCartService.getCartItems(this.customerId).subscribe(items => {
+    this.shoppingCartService.getCartItems(this.customerId).subscribe(
+      items => {
         this.cartItems = items;
         this.quantities = items.map(item => item.quantity); // Initialize quantities array based on cart items
         this.calculateTotalAmount();
-    }, error => {
+      },
+      error => {
         console.error('Error loading cart items:', error);
-    });
-}
-
-calculateTotalAmount(): void {
-  this.totalAmount = this.cartItems.reduce((acc, item) => {
-      const price = item.price || 0; // Fallback to 0 if price is undefined
-      const promotion = item.promotion || 0; // Fallback to 0 if promotion is undefined
-      const quantity = item.quantity || 1; // Fallback to 1 if quantity is undefined
-      console.log(`Calculating for item: `, item.productName, ` Price: `, price, ` Promotion: `, promotion, ` Quantity: `, quantity);
-      const itemTotal = quantity * price * ((100 - promotion) / 100);
-      return acc + itemTotal;
-  }, 0);
-  console.log('Total Amount:', this.totalAmount);
-}
-
-calculateTotalForItem(item: any, quantity: number): number {
-  const price = item.price || 0;
-  const promotion = item.promotion || 0;
-
-  const total = quantity * price * ((100 - promotion) / 100);
-
-  if (isNaN(total)) {
-    console.error('Calculation resulted in NaN:', { item, quantity, total });
-    return 0; // Return 0 to avoid NaN in the UI
+      }
+    );
   }
 
-  return total;
-}
+  updateTotalAmount(): void {
+    this.calculateTotalAmount();
+  }
 
-getTotalAmount(): number {
-  return this.cartItems.reduce((total, item, index) => {
+  calculateTotalAmount(): void {
+    let total = this.cartItems.reduce((acc, item) => {
       const price = item.price || 0;
       const promotion = item.promotion || 0;
-      const quantity = this.quantities[index] || 1;
-      return total + (quantity * price * ((100 - promotion) / 100));
-  }, 0);
-}
+      const quantity = item.quantity || 1;
+      const itemTotal = quantity * price * ((100 - promotion) / 100);
+      return acc + itemTotal;
+    }, 0);
 
+    if (this.deliveryOption === 'delivery') {
+      total += this.deliveryFee; // Adding delivery charge if delivery is selected
+    }
 
-decreaseQuantity(index: number): void {
-  if (this.quantities[index] > 1) {
-      this.quantities[index]--;
-      this.calculateTotalAmount(); // Recalculate total amount after quantity change
+    this.totalAmount = total;
+    console.log('Total Amount:', this.totalAmount);
   }
-}
 
-increaseQuantity(index: number): void {
-  this.quantities[index]++;
-  this.calculateTotalAmount(); // Recalculate total amount after quantity change
-}
+  updateQuantity(index: number, newQuantity: number): void {
+    const productId = this.cartItems[index].productID || this.cartItems[index].productId;
 
-  getCartItems(customerId: number): Observable<any[]> {
-    return this.shopingCartService.getCartItems(customerId).pipe(
-      tap((items: any) => console.log(items))
+    if (!productId) {
+      console.error('Product ID is undefined for item:', this.cartItems[index]);
+      return;
+    }
+
+    if (newQuantity < 0) {
+      console.warn('Quantity cannot be negative:', newQuantity);
+      return;
+    }
+
+    console.log('Updating quantity:', {
+      customerId: this.customerId,
+      productId: productId,
+      quantity: newQuantity
+    });
+
+    this.shoppingCartService.updateCartItem(this.customerId, productId, newQuantity).subscribe(
+      (response: string) => {
+        console.log('Backend response:', response);
+        if (newQuantity === 0) {
+          this.cartItems.splice(index, 1);
+          this.quantities.splice(index, 1);
+        } else {
+          this.quantities[index] = newQuantity;
+        }
+        this.calculateTotalAmount();
+      },
+      (error: HttpErrorResponse) => {
+        console.error('Error updating quantity:', error.message);
+        console.log('Full error object:', error);
+        if (error.error) {
+          console.log('Backend error response:', error.error);
+        }
+      }
     );
   }
 
   deleteItem(index: number): void {
-    const itemId = this.cartItems[index].product.productID;
-    this.shopingCartService.deleteFromCart(this.customerId, itemId).subscribe(() => {
+    const productId = this.cartItems[index].productID;
+    this.shoppingCartService.deleteFromCart(this.customerId, productId).subscribe(() => {
       this.cartItems.splice(index, 1);
       this.quantities.splice(index, 1);
       this.calculateTotalAmount();
     });
+  }
+
+  submitOrder(): void {
+    const orderItems = this.cartItems.map(item => ({
+      productId: item.productID || item.productId,
+      quantity: item.quantity
+    }));
+
+    const order = {
+      customerId: this.customerId,
+      totalPrice: this.totalAmount,
+      delivery: this.deliveryOption === 'delivery',
+      address: this.deliveryOption === 'delivery' ? 'Please update address' : 'Pickup location',
+      items: orderItems  // Include the items in the order request
+    };
+
+    console.log('Submitting order:', order);  // Log the order payload
+
+    this.shoppingCartService.createOrder(order).subscribe(
+      () => {
+        console.log('Order submitted successfully');
+        // Redirect to payment page
+        this.router.navigate(['/payment', order.customerId]);
+        // Clear the cart after order submission
+        this.shoppingCartService.clearCart(this.customerId).subscribe(() => {
+          console.log('Shopping cart cleared');
+        });
+      },
+      (error: HttpErrorResponse) => {
+        console.error('Error submitting order:', error.message);
+        console.log('Full error object:', error);
+      }
+    );
+  }
+
+  calculateTotalForItem(item: any, quantity: number): number {
+    const price = item.price || 0;
+    const promotion = item.promotion || 0;
+    return quantity * price * ((100 - promotion) / 100);
   }
 }

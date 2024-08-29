@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class ShopingCartService {
+export class ShoppingCartService {
 
   private apiUrl = 'http://localhost:9090/api/cart';
 
@@ -25,4 +25,18 @@ export class ShopingCartService {
       params: { productId: productId.toString() }
     });
   }
+
+  updateCartItem(customerId: number, productId: number, quantity: number): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${customerId}/update`, { productId, quantity }, { responseType: 'text' });
+}
+
+createOrder(order: any): Observable<any> {
+  return this.http.post('http://localhost:9090/api/orders/create', order);
+}
+
+clearCart(customerId: number): Observable<void> {
+  return this.http.delete<void>(`${this.apiUrl}/cart/${customerId}/clear`);
+}
+
+
 }

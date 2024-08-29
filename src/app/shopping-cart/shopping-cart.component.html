@@ -1,47 +1,58 @@
-<body>
-    <div class="container">
-        <h2>סל הקניות</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>שם מוצר</th>
-                    <th>כמות</th>
-                    <th>צבע</th>
-                    <th>מחיר ליחידה</th>
-                    <th>הנחה</th>
-                    <th>סה"כ</th>
-                    <th>מחק</th>
+<div class="container">
+    <h2>סל הקניות</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>שם מוצר</th>
+                <th>כמות</th>
+                <th>צבע</th>
+                <th>מחיר ליחידה</th>
+                <th>הנחה</th>
+                <th>סה"כ</th>
+                <th>מחק</th>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-container *ngIf="cartItems.length > 0; else noItems">
+                <tr *ngFor="let item of cartItems; let i = index">
+                    <td>{{ item.productName }}</td>
+                    <td>
+                        <button (click)="updateQuantity(i, quantities[i] - 1)">-</button>
+                        {{ quantities[i] }}
+                        <button (click)="updateQuantity(i, quantities[i] + 1)">+</button>
+                    </td>
+                    
+                    <td>{{ item.color }}</td>
+                    <td>{{ item.price || 0 }}</td>
+                    <td>{{ item.promotion }}%</td>
+                    <td>
+                        {{ calculateTotalForItem(item, quantities[i]) }}
+                    </td>
+                    <td>
+                        <button (click)="deleteItem(i)">מחק</button>
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-                <ng-container *ngIf="cartItems.length > 0; else noItems">
-                    <tr *ngFor="let item of cartItems; let i = index">
-                        <td>{{ item.productName }}</td>
-                        <td>
-                            <button (click)="decreaseQuantity(i)">-</button>
-                            {{ quantities[i] }}
-                            <button (click)="increaseQuantity(i)">+</button>
-                        </td>
-                        <td>{{ item.color }}</td>
-                        <td>{{ item.price || 0 }}</td>
-                        <td>{{ item.promotion }}%</td>
-                        <td>
-                            {{ calculateTotalForItem(item, quantities[i]) }}
-                        </td>
-                        <td>
-                            <button (click)="deleteItem(i)">מחק</button>
-                        </td>
-                    </tr>
-                </ng-container>
-                <ng-template #noItems>
-                    <tr>
-                        <td colspan="7">אין פריטים בסל</td>
-                    </tr>
-                </ng-template>
-            </tbody>
-            
-        </table>
-        <p><strong>סה"כ לתשלום: {{ getTotalAmount() | currency:'ILS' }}</strong></p>
-        <button routerLink="/payment" class="checkout-button">מעבר לתשלום</button>
+            </ng-container>
+            <ng-template #noItems>
+                <tr>
+                    <td colspan="7">אין פריטים בסל</td>
+                </tr>
+            </ng-template>
+        </tbody>
+    </table>
+    
+    <div class="section">
+        <h2>נא לסמן סוג משלוח:</h2>
+        <label>
+            <input type="radio" name="shipping" value="pickup" [(ngModel)]="deliveryOption" (change)="updateTotalAmount()" required>
+            איסוף עצמי
+        </label>
+        <label>
+            <input type="radio" name="shipping" value="delivery" [(ngModel)]="deliveryOption" (change)="updateTotalAmount()" required>
+            משלוח עד הבית (100 ש"ח)
+        </label>
     </div>
-</body>
+    
+    <p><strong>סה"כ לתשלום: {{ totalAmount | currency:'ILS' }}</strong></p>
+    <button (click)="submitOrder()" class="checkout-button">מעבר לתשלום</button>
+</div>

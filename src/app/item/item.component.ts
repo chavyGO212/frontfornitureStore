@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { itemService } from '../item/item.service';
-import { ShopingCartService } from '../shopping-cart/shoping-cart.service';
+import { ShoppingCartService } from '../shopping-cart/shopping-cart.service';
 import { AuthService } from '../log-in/auth.service';
 
 @Component({
@@ -17,7 +17,7 @@ export class ItemComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private itemService: itemService,
-    private shopingCartService: ShopingCartService,
+    private shoppingCartService: ShoppingCartService,
     private authService: AuthService,
     private router: Router 
   ) {}
@@ -58,7 +58,7 @@ export class ItemComponent implements OnInit {
     const productId = product.productID;
     const quantity = this.quantity;
   
-    this.shopingCartService.addToCart(customerId, productId, quantity).subscribe(response => {
+    this.shoppingCartService.addToCart(customerId, productId, quantity).subscribe(response => {
       this.router.navigate(['/shopping-cart']); 
     }, error => {
       console.error('Error adding to cart:', error);

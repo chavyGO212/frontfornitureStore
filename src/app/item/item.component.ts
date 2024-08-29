@@ -1,10 +1,8 @@
-
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router'; // ייבוא Router
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { itemService } from '../item/item.service';
-import { ShopingCartService } from '../shopping-cart/shoping-cart.service';
-import { AuthService } from '../log-in/auth.service'; // שירות לבדיקה אם המשתמש רשום
+import { ShoppingCartService } from '../shopping-cart/shopping-cart.service';
+import { AuthService } from '../log-in/auth.service';
 
 @Component({
   selector: 'app-item',
@@ -19,23 +17,27 @@ export class ItemComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private itemService: itemService,
-    private shopingCartService: ShopingCartService,
+    private shoppingCartService: ShoppingCartService,
     private authService: AuthService,
     private router: Router 
   ) {}
 
-    ngOnInit(): void {
-      const id = this.route.snapshot.paramMap.get('productID');
-      if (id) {
-        this.itemService.getProductById(id).subscribe(data => {
+  ngOnInit(): void {
+    const id = this.route.snapshot.paramMap.get('productID');
+    if (id) {
+      this.itemService.getProductById(id).subscribe(
+        data => {
           this.product = data;
-        });
-      } else {
-        console.error('ID is null');
-      }
-      this.isLoggedIn = this.authService.isLoggedIn();
+        },
+        error => {
+          console.error('Error fetching product data:', error);
+        }
+      );
+    } else {
+      console.error('ID is null');
     }
-    
+    this.isLoggedIn = this.authService.isLoggedIn();
+  }
 
   increaseQuantity(): void {
     this.quantity++;
@@ -50,16 +52,20 @@ export class ItemComponent implements OnInit {
   
   
   addToCart(product: any) { 
-    const cartItem = {
-      productId: product.productID,
-        quantity: this.quantity,
-    };
-    this.shopingCartService.addToCart(cartItem).subscribe(response => {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    const customerId = user.id; // Retrieve the logged-in user's ID from localStorage
+    
+    const productId = product.productID;
+    const quantity = this.quantity;
+  
+    this.shoppingCartService.addToCart(customerId, productId, quantity).subscribe(response => {
       this.router.navigate(['/shopping-cart']); 
     }, error => {
       console.error('Error adding to cart:', error);
     });
   }
+  
+  
   
 }
 

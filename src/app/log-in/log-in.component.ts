@@ -38,6 +38,10 @@ export class LogInComponent implements OnInit {
   }
 
   onLogin() {
+    if (this.loginForm.invalid) {
+      alert("נא למלא את כל השדות לפני שמתחברים.");
+      return;
+  }
     if (this.loginForm.valid) {
         const { email, password } = this.loginForm.value;
         this.authService.login(email, password).subscribe(

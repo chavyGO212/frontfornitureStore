@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient,HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 @Component({
@@ -50,16 +50,20 @@ export class PaymentComponent implements OnInit {
     console.log('Sending payment request:', paymentRequest);
   
     // Send the HTTP POST request to the correct URL
-    this.http.post('http://localhost:9090/api/payments/process', paymentRequest).subscribe(
-      response => {
+    this.http.post('http://localhost:9090/api/payments/process', paymentRequest).subscribe({
+      next: (response: any) => {
         console.log('Payment successful', response);
-        this.router.navigate(['/confirmation']);
+        // Redirect to orders page
+        this.router.navigate(['/orders']);
       },
-      error => {
+      error: (error: HttpErrorResponse) => {
         console.error('Payment failed', error);
+        alert('Payment failed: ' + (error.error?.message || 'An unexpected error occurred. Please try again.'));
       }
-    );
-  }
+    });
+}
+
+  
   
   
 }

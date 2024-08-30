@@ -20,11 +20,10 @@ export class OrdersService {
   }
 
   updateOrderAddress(orderId: number, newAddress: string, userId: number): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${orderId}/address?userId=${userId}`, newAddress);
+    return this.http.put(`${this.apiUrl}/update-address`, { orderId, newAddress, userId });
   }
 
-  cancelOrder(orderId: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${orderId}/cancel`);
+  cancelOrder(orderId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/cancel/${orderId}`);
   }
-  
 }

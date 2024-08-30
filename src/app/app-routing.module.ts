@@ -17,6 +17,7 @@ import {AddItemComponent} from './add-item-component/add-item-component.componen
 import { ColorComponent } from './color/color.component';
 import { ManageClientsComponent } from './manage-clients/manage-clients.component';
 import { ManageShopingCartComponent } from './manage-shoping-cart/manage-shoping-cart.component';
+import { OrderItemsComponent } from './orderItem/order-items.component';
 
 const routes: Routes = [
   {path: "", component: HomeComponent},
@@ -35,7 +36,11 @@ const routes: Routes = [
   {path: "newItem", component: AddItemComponent},
   {path: "color", component: ColorComponent},
   {path: "manage-clients", component: ManageClientsComponent},
-  {path: "manage-shoping-cart", component:  ManageShopingCartComponent}
+  {path: "manage-shoping-cart", component:  ManageShopingCartComponent},
+  { path: 'orders', component: OrdersComponent },
+  { path: 'order-items', component: OrderItemsComponent },
+  { path: '', redirectTo: '/orders', pathMatch: 'full' }, 
+  { path: '**', redirectTo: '/orders' } 
   ]
 
 @NgModule({

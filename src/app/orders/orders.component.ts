@@ -45,8 +45,14 @@ export class OrdersComponent implements OnInit {
     }
   }
 
-  cancelOrder(orderId: number, event: Event) {
+  confirmCancelOrder(orderId: number, event: Event) {
     event.stopPropagation();
+    if (confirm("Are you sure you want to cancel this order?")) {
+      this.cancelOrder(orderId);
+    }
+  }
+
+  cancelOrder(orderId: number) {
     this.ordersService.cancelOrder(orderId).subscribe(
       () => this.fetchOrders()
     );

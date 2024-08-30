@@ -1,31 +1,28 @@
 <div class="container">
-    <header class="header">
-        <h1>רשימת הזמנות</h1>
-    </header>
-    <main class="main-content">
-        <table class="order-table">
-            <thead>
-                <tr>
-                    <th>מספר הזמנה</th>
-                    <th>כתובת</th>
-                    <th>סה"כ להזמנה</th>
-                    <th>סטאטוס</th>
-                    <th>פעולות</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let order of orders" (click)="viewOrderItems(order.orderId)">
-                    <td>{{ order.orderId }}</td>
-                    <td>{{ order.address }}</td>
-                    <td>{{ order.totalPrice | currency:'USD' }}</td>
-                    <td>{{ order.status }}</td>
-                    <td>
-                        <button *ngIf="order.status === 'UNPAID'" class="action-button pay-button" (click)="goToPayment(order, $event)">Pay</button>
-                        <button *ngIf="order.delivery && order.status === 'UNPAID'" class="action-button update-button" (click)="updateAddress(order.orderId, $event)">Update Address</button>
-                        <button *ngIf="order.status === 'UNPAID'" class="action-button cancel-button" (click)="cancelOrder(order.orderId, $event)">Cancel</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </main>
+  <h1 class="header">Your Orders</h1>
+  <table class="order-table">
+    <thead>
+      <tr>
+        <th>Order ID</th>
+        <th>Address</th>
+        <th>Total Price</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let order of orders" (click)="viewOrderItems(order.orderId)" class="order-row">
+        <td>{{ order.orderId }}</td>
+        <td>{{ order.address }}</td>
+        <td>{{ order.totalPrice }}</td>
+        <td>{{ order.status }}</td>
+        <td>
+          <button *ngIf="order.status === 'UNPAID'" (click)="goToPayment(order, $event)" class="action-button pay-button">Pay</button>
+          <button *ngIf="order.delivery && order.status === 'UNPAID'" (click)="updateAddress(order.orderId, $event)" class="action-button update-button">Update Address</button>
+          <button *ngIf="order.status === 'UNPAID'" (click)="confirmCancelOrder(order.orderId, $event)" class="action-button cancel-button">Cancel</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="click-hint">Click on an order to view its details.</p>
 </div>

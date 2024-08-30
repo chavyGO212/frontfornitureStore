@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http'
 import { RouterModule, Routes } from '@angular/router';
+import { CommonModule } from '@angular/common'; 
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -30,6 +31,7 @@ import { AddItemComponent } from './add-item-component/add-item-component.compon
 import { PromotionComponent } from './promotion/promotion.component';
 import { CreditCardComponent } from './credit-card/credit-card.component';
 import { AuthService } from './log-in/auth.service';
+import { OrderItemsComponent } from './orderItem/order-items.component';
 
 
 const routes: Routes = [
@@ -69,6 +71,7 @@ const routes: Routes = [
     AddItemComponent,
     PromotionComponent,
     CreditCardComponent,
+    OrderItemsComponent,
   ],
   imports: [
     BrowserModule,
@@ -76,7 +79,8 @@ const routes: Routes = [
     HttpClientModule,
     ReactiveFormsModule,
     RouterModule.forRoot(routes),
-    FormsModule
+    FormsModule,
+    CommonModule  
   ],
   providers: [],
   bootstrap: [AppComponent]

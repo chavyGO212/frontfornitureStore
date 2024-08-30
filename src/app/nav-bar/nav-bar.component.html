@@ -6,7 +6,8 @@
     <button routerLink="/conect" class="borderless-button right-butten">צור קשר</button>
     <button routerLink="/shopping-cart" class="borderless-button left-butten">סל קניות</button>
 
-    <!-- Conditional rendering for login/logout based on loggedIn state -->
+    <!-- Conditional rendering for personal area and login/logout based on loggedIn state -->
+    <button *ngIf="loggedIn" routerLink="/personal-log-in" class="borderless-button left-butten">אזור אישי</button>
     <button *ngIf="loggedIn" (click)="logout()" class="borderless-button left-butten">Logout</button>
     <button *ngIf="!loggedIn" routerLink="/log-in" class="borderless-button left-butten">התחבר</button>
 </nav>

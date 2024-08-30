@@ -1,55 +1,25 @@
-
 <body>
     <div class="personal-area">
-            <!-- Logout button at the top left corner -->
-    <button class="logout-button" (click)="logout()">Logout</button>
-    
+        <!-- Logout button at the top left corner -->
+        <button class="logout-button" (click)="logout()">Logout</button>
+        
         <h1>אזור אישי ללקוח</h1>
         <section class="personal-details">
             <h2>פרטים אישיים</h2>
             <p>{{user.firstName}}</p>
             <p>{{user.lastName}}</p>
             <p>{{user.email}}</p>
-            <p>{{user.phone}} </p>
+            <p>{{user.phone}}</p>
             <button routerLink="/update-p-d">עדכון פרטים אישיים</button><br>
-            <button routerLink="/orders" *ngIf="user.permissionType === 'admin'">  טיפול בהזמנות לקוחות</button><br>
-            <button routerLink="/stock" *ngIf="user.permissionType === 'admin'">  טיפול במלאי</button><br>
-            <button routerLink="/manage-clients" *ngIf="user.permissionType === 'admin'"> פרטי לקוחות רשומים</button><br>
-            <button routerLink="/manage-shoping-cart" *ngIf="user.permissionType === 'admin'">  דוח ניהול סלי קניות</button>
-        </section>
-        
-        <section class="payment-details">
-            <h2>פרטי תשלום</h2>
-            <p>מספר כרטיס: **** **** **** 1234</p>
-            <p>תוקף: 12/24</p>
-            <p>סוג כרטיס: ויזה</p>
-        </section>
-        <section class="order-report">
-            <h2>דוח הזמנות</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>מספר הזמנה</th>
-                        <th>תאריך הזמנה</th>
-                        <th>סכום</th>
-                        <th>סטטוס</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>12345</td>
-                        <td>01/01/2023</td>
-                        <td>₪500</td>
-                        <td>שולם</td>
-                    </tr>
-                    <tr>
-                        <td>12346</td>
-                        <td>02/02/2023</td>
-                        <td>₪300</td>
-                        <td>בתהליך</td>
-                    </tr>
-                </tbody>
-            </table>
+            
+            <!-- New button to navigate to orders -->
+            <button routerLink="/orders">הזמנות שלי</button><br>
+            
+            <!-- Admin-specific buttons -->
+            <button routerLink="/orders" *ngIf="user.permissionType === 'admin'">טיפול בהזמנות לקוחות</button><br>
+            <button routerLink="/stock" *ngIf="user.permissionType === 'admin'">טיפול במלאי</button><br>
+            <button routerLink="/manage-clients" *ngIf="user.permissionType === 'admin'">פרטי לקוחות רשומים</button><br>
+            <button routerLink="/manage-shoping-cart" *ngIf="user.permissionType === 'admin'">דוח ניהול סלי קניות</button>
         </section>
     </div>
 </body>

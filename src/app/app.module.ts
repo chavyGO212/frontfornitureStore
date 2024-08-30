@@ -32,6 +32,7 @@ import { PromotionComponent } from './promotion/promotion.component';
 import { CreditCardComponent } from './credit-card/credit-card.component';
 import { AuthService } from './log-in/auth.service';
 import { OrderItemsComponent } from './orderItem/order-items.component';
+import { ManageOrdersComponent } from './manage-orders/manage-orders.component';
 
 
 const routes: Routes = [
@@ -72,6 +73,7 @@ const routes: Routes = [
     PromotionComponent,
     CreditCardComponent,
     OrderItemsComponent,
+    ManageOrdersComponent,
   ],
   imports: [
     BrowserModule,

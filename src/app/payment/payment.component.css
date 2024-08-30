@@ -1,3 +1,4 @@
+
 .container {
     max-width: 600px;
     margin: 0 auto;
@@ -5,6 +6,8 @@
     border: 1px solid #ccc;
     border-radius: 10px;
     background-color: #f9f9f9;
+    direction: rtl;
+    
 }
 
 h1 {
@@ -15,6 +18,7 @@ h1 {
 .payment-info {
     text-align: center;
     margin-bottom: 20px;
+    
 }
 
 .payment-form {

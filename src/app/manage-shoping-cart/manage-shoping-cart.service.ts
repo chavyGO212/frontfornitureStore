@@ -7,11 +7,16 @@ import { Observable } from 'rxjs';
 })
 export class manageShopingCartService {
 
-  private apiUrl = 'http://localhost:8080/api/manageShopingCart'; 
+  private apiUrl = 'http://localhost:9090/api/cart'; 
 
   constructor(private http: HttpClient) { }
 
   getData(): Observable<any> {
-    return this.http.get<any>(this.apiUrl);
+    return this.http.get<any[]>(this.apiUrl);
   }
+
+  cancelCart(cartId: number): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/${cartId}/cancel`, {});
+}
+
 }

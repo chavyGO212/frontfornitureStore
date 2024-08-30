@@ -8,24 +8,26 @@
             <table class="order-table">
                 <thead>
                     <tr>
-                        <th> מס הזמנה</th>
+                        <th>מס הזמנה</th>
                         <th>מס לקוח</th>
-                        <th>פריט </th>
-                        <th>תאריך הוספה לסל</th>
+                        <th>תאריך יצירת הסל</th>
+                        <th>תאריך עדכון הסל</th>
                         <th>סטטוס ההזמנה</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let shopingCart of manageShopingCart">
-                        <td>{{shopingCart.orderNum}}</td>
-                        <td>{{shopingCart.customerNum}}</td>
-                        <td>{{shopingCart.item}}</td>
-                        <td>{{shopingCart.addDate}}</td>
-                        <td>{{shopingCart.status}}</td>
+                    <tr *ngFor="let shoppingCart of manageShopingCart">
+                        <td>{{ shoppingCart.cartId }}</td>
+                        <td>{{ shoppingCart.customer.customerId }}</td>
+                        <td>{{ shoppingCart.customer.createdAt }}</td>
+                        <td>{{ shoppingCart.customer.updatedAt }}</td>
+                        <!-- <td>{{ shoppingCart.shoppingCartStatus.statusDescription }}</td>  -->
                     </tr>
                 </tbody>
             </table>
         </main>
     </div>
 </body>
+
+
 

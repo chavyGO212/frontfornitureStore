@@ -15,8 +15,14 @@ export class manageShopingCartService {
     return this.http.get<any[]>(this.apiUrl);
   }
 
-  cancelCart(cartId: number): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/${cartId}/cancel`, {});
+  cancelCart(cartId: number): Observable<string> {
+    return this.http.put(`${this.apiUrl}/${cartId}/cancel`, {}, { responseType: 'text' }) as Observable<string>;
+  }
+
+
+getActiveCarts(): Observable<any> {
+  return this.http.get<any[]>(`${this.apiUrl}/active`);
 }
+
 
 }

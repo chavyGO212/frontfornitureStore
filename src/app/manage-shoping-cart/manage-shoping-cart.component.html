@@ -1,33 +1,38 @@
-
-<body>
-    <div class="container">
-        <header class="header">
-            <h1>הזמנות</h1>
-        </header>
-        <main class="main-content">
-            <table class="order-table">
-                <thead>
-                    <tr>
-                        <th>מס הזמנה</th>
-                        <th>מס לקוח</th>
-                        <th>תאריך יצירת הסל</th>
-                        <th>תאריך עדכון הסל</th>
-                        <th>סטטוס ההזמנה</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let shoppingCart of manageShopingCart">
-                        <td>{{ shoppingCart.cartId }}</td>
-                        <td>{{ shoppingCart.customer.customerId }}</td>
-                        <td>{{ shoppingCart.customer.createdAt }}</td>
-                        <td>{{ shoppingCart.customer.updatedAt }}</td>
-                        <!-- <td>{{ shoppingCart.shoppingCartStatus.statusDescription }}</td>  -->
-                    </tr>
-                </tbody>
-            </table>
-        </main>
-    </div>
-</body>
-
-
-
+<div class="container">
+    <header class="header">
+      <h1>ניהול סלי הזמנות</h1>
+    </header>
+    <main class="main-content">
+      <!-- Check if there are any active shopping carts -->
+      <div *ngIf="manageShopingCart.length === 0" class="no-carts-message">
+        אין סלי הזמנות לטיפול
+      </div>
+  
+      <!-- Display the shopping carts if they exist -->
+      <table class="order-table" *ngIf="manageShopingCart.length > 0">
+        <thead>
+          <tr>
+            <th>מס הזמנה</th>
+            <th>מס לקוח</th>
+            <th>תאריך יצירת הסל</th>
+            <th>תאריך עדכון הסל</th>
+            <th>סטטוס ההזמנה</th>
+            <th>פעולות</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let shoppingCart of manageShopingCart">
+            <td>{{ shoppingCart.cartId }}</td>
+            <td>{{ shoppingCart.customerId }}</td>
+            <td>{{ formatDate(shoppingCart.createdAt) }}</td>
+            <td>{{ formatDate(shoppingCart.updatedAt) }}</td>
+            <td>{{ shoppingCart.statusDescription }}</td>
+            <td>
+              <button (click)="cancelCart(shoppingCart.cartId)">בטל</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </main>
+  </div>
+  

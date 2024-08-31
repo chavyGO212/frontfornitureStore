@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { HttpClient,HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 @Component({
@@ -37,7 +37,7 @@ export class PaymentComponent implements OnInit {
     if (!this.paymentData.cardholderId || !this.paymentData.cardholderFirstName || !this.paymentData.cardholderLastName || !this.paymentData.creditCardNumber || !this.paymentData.creditCardExpDate || !this.paymentData.cvv) {
       return;
     }
-  
+
     // Construct the payment request object
     const paymentRequest = {
       orderId: this.orderId,
@@ -45,15 +45,15 @@ export class PaymentComponent implements OnInit {
       userId: this.user.id,
       ...this.paymentData
     };
-  
+
     // Print the payment request to the console
     console.log('Sending payment request:', paymentRequest);
-  
+
     // Send the HTTP POST request to the correct URL
-    this.http.post('http://localhost:9090/api/payments/process', paymentRequest).subscribe({
+    this.http.post('http://localhost:9090/api/payments/process', paymentRequest, { observe: 'response' }).subscribe({
       next: (response: any) => {
         console.log('Payment successful', response);
-        // Redirect to orders page
+        // Navigate to the orders page after successful payment
         this.router.navigate(['/orders']);
       },
       error: (error: HttpErrorResponse) => {
@@ -61,9 +61,6 @@ export class PaymentComponent implements OnInit {
         alert('Payment failed: ' + (error.error?.message || 'An unexpected error occurred. Please try again.'));
       }
     });
-}
+  }
 
-  
-  
-  
 }

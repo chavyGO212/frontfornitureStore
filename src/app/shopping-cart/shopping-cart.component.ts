@@ -42,61 +42,62 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   calculateTotalAmount(): void {
-    let total = this.cartItems.reduce((acc, item) => {
-      const price = item.price || 0;
-      const promotion = item.promotion || 0;
-      const quantity = item.quantity || 1;
-      const itemTotal = quantity * price * ((100 - promotion) / 100);
-      return acc + itemTotal;
+    let total = this.cartItems.reduce((acc, item, index) => {
+        const price = item.price || 0;
+        const promotion = item.promotion || 0;
+        const quantity = this.quantities[index] || 1;  // Use the updated quantity
+        const itemTotal = quantity * price * ((100 - promotion) / 100);
+        return acc + itemTotal;
     }, 0);
 
     if (this.deliveryOption === 'delivery') {
-      total += this.deliveryFee; // Adding delivery charge if delivery is selected
+        total += this.deliveryFee; // Adding delivery charge if delivery is selected
     }
 
     this.totalAmount = total;
     console.log('Total Amount:', this.totalAmount);
-  }
+}
+
 
   updateQuantity(index: number, newQuantity: number): void {
     const productId = this.cartItems[index].productID || this.cartItems[index].productId;
 
     if (!productId) {
-      console.error('Product ID is undefined for item:', this.cartItems[index]);
-      return;
+        console.error('Product ID is undefined for item:', this.cartItems[index]);
+        return;
     }
 
     if (newQuantity < 0) {
-      console.warn('Quantity cannot be negative:', newQuantity);
-      return;
+        console.warn('Quantity cannot be negative:', newQuantity);
+        return;
     }
 
     console.log('Updating quantity:', {
-      customerId: this.customerId,
-      productId: productId,
-      quantity: newQuantity
+        customerId: this.customerId,
+        productId: productId,
+        quantity: newQuantity
     });
 
     this.shoppingCartService.updateCartItem(this.customerId, productId, newQuantity).subscribe(
-      (response: string) => {
-        console.log('Backend response:', response);
-        if (newQuantity === 0) {
-          this.cartItems.splice(index, 1);
-          this.quantities.splice(index, 1);
-        } else {
-          this.quantities[index] = newQuantity;
+        (response: string) => {
+            console.log('Backend response:', response);
+            if (newQuantity === 0) {
+                this.cartItems.splice(index, 1);
+                this.quantities.splice(index, 1);
+            } else {
+                this.quantities[index] = newQuantity;
+            }
+            this.calculateTotalAmount();  // Ensure the total is recalculated after updating the quantity
+        },
+        (error: HttpErrorResponse) => {
+            console.error('Error updating quantity:', error.message);
+            console.log('Full error object:', error);
+            if (error.error) {
+                console.log('Backend error response:', error.error);
+            }
         }
-        this.calculateTotalAmount();
-      },
-      (error: HttpErrorResponse) => {
-        console.error('Error updating quantity:', error.message);
-        console.log('Full error object:', error);
-        if (error.error) {
-          console.log('Backend error response:', error.error);
-        }
-      }
     );
-  }
+}
 
   deleteItem(index: number): void {
     const productId = this.cartItems[index].productID;
@@ -106,6 +107,8 @@ export class ShoppingCartComponent implements OnInit {
       this.calculateTotalAmount();
     });
   }
+
+
   submitOrder(): void {
     const orderItems = this.cartItems.map(item => ({
         productId: item.productID || item.productId,
@@ -117,26 +120,40 @@ export class ShoppingCartComponent implements OnInit {
         totalPrice: this.totalAmount,
         delivery: this.deliveryOption === 'delivery',
         address: this.deliveryOption === 'delivery' ? 'Please update address' : 'Pickup location',
-        items: orderItems  // Include the items in the order request
+        items: orderItems
     };
 
-    console.log('Submitting order:', order);  // Log the order payload
+    console.log('Submitting order:', order);
 
     this.shoppingCartService.createOrder(order).subscribe(
         (response: any) => {
             console.log('Order submitted successfully');
             console.log('Order Response:', response);
-            this.router.navigate(['/payment'], { queryParams: { orderId: response.orderId, amount: response.totalPrice } });
+
+            // Clear the shopping cart after order submission
             this.shoppingCartService.clearCart(this.customerId).subscribe(() => {
                 console.log('Shopping cart cleared');
+
+                // Redirect to the payment page with orderId and amount as query parameters
+                this.router.navigate(['/payment'], { 
+                    queryParams: { 
+                        orderId: response.orderId, 
+                        amount: response.totalPrice 
+                    } 
+                });
+            }, (error: HttpErrorResponse) => {
+                console.error('Error clearing cart:', error.message);
+                // Optional: Handle cart clearing error, maybe inform the user or retry
             });
         },
         (error: HttpErrorResponse) => {
             console.error('Error submitting order:', error.message);
-            console.log('Full error object:', error);
+            // Optional: Handle order submission error, maybe inform the user or retry
         }
     );
 }
+
+
 
   calculateTotalForItem(item: any, quantity: number): number {
     const price = item.price || 0;

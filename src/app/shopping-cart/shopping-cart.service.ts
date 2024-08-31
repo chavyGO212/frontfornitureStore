@@ -35,7 +35,7 @@ createOrder(order: any): Observable<any> {
 }
 
 clearCart(customerId: number): Observable<void> {
-  return this.http.delete<void>(`${this.apiUrl}/cart/${customerId}/clear`);
+  return this.http.delete<void>(`${this.apiUrl}/${customerId}/clear`);
 }
 
 

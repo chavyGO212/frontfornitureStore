@@ -13,35 +13,38 @@ import { PaymentComponent } from './payment/payment.component';
 import { ItemComponent } from './item/item.component';
 import { OrdersComponent } from './orders/orders.component';
 import { StockComponent } from './stock/stock.component';
-import {AddItemComponent} from './add-item-component/add-item-component.component'
+import { AddItemComponent } from './add-item-component/add-item-component.component';
 import { ColorComponent } from './color/color.component';
 import { ManageClientsComponent } from './manage-clients/manage-clients.component';
 import { ManageShopingCartComponent } from './manage-shoping-cart/manage-shoping-cart.component';
 import { OrderItemsComponent } from './orderItem/order-items.component';
 
 const routes: Routes = [
-  {path: "", component: HomeComponent},
-  {path: "chair-galery", component: ChairGaleryComponent},
-  {path: "table-galery", component: TableGaleryComponent},
-  {path: "conect", component: ConectComponent},
-  {path: "log-in", component: LogInComponent},
-  {path: "personal-log-in", component: PersonalLogInComponent},
-  {path: "update-p-d", component: UpdatePDComponent},
-  {path: "register", component: RegisterComponent},
-  {path: "shopping-cart", component: ShoppingCartComponent},
-  {path: "payment", component: PaymentComponent},
-  {path: "item/:productID", component: ItemComponent},
-  {path: "orders", component: OrdersComponent},
-  {path: "stock", component: StockComponent},
-  {path: "newItem", component: AddItemComponent},
-  {path: "color", component: ColorComponent},
-  {path: "manage-clients", component: ManageClientsComponent},
-  {path: "manage-shoping-cart", component:  ManageShopingCartComponent},
-  { path: 'orders', component: OrdersComponent },
-  { path: 'order-items', component: OrderItemsComponent },
-  { path: '', redirectTo: '/orders', pathMatch: 'full' }, 
+  { path: "", component: HomeComponent },
+  { path: "chair-galery", component: ChairGaleryComponent },
+  { path: "table-galery", component: TableGaleryComponent },
+  { path: "conect", component: ConectComponent },
+  { path: "log-in", component: LogInComponent },
+  { path: "personal-log-in", component: PersonalLogInComponent },
+  { path: "update-p-d", component: UpdatePDComponent },
+  { path: "register", component: RegisterComponent },
+  { path: "shopping-cart", component: ShoppingCartComponent },
+  { path: "payment", component: PaymentComponent },
+  { path: "item/:productID", component: ItemComponent },
+  { path: "orders", component: OrdersComponent },
+  { path: "stock", component: StockComponent },
+  { path: "newItem", component: AddItemComponent },
+  { path: "color", component: ColorComponent },
+  { path: "manage-clients", component: ManageClientsComponent },
+  { path: "manage-shoping-cart", component: ManageShopingCartComponent },
+  { path: "order-items", component: OrderItemsComponent },
+  
+  // Redirect root path to orders or home as needed
+  { path: '', redirectTo: '/orders', pathMatch: 'full' },
+
+  // Wildcard route for a 404 page
   { path: '**', redirectTo: '/orders' } 
-  ]
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

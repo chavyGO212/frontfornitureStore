@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams  } from '@angular/common/http';
 import { Observable } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
@@ -21,9 +22,16 @@ export class OrdersService {
     return this.http.get<any[]>(`${this.apiUrl}/${orderId}/items`);
   }
 
-  updateOrderAddress(orderId: number, newAddress: string, userId: number): Observable<any> {
-    return this.http.put(`${this.apiUrl}/update-address`, { orderId, newAddress, userId });
+  updateOrderAddress(orderId: number, newAddress: string, userId: number) {
+    const params = new HttpParams()
+      .set('orderId', orderId.toString())
+      .set('newAddress', newAddress)
+      .set('userId', userId.toString());
+      
+    return this.http.put(`${this.apiUrl}/update-address`, null, { params, responseType: 'text' });
   }
+  
+  
 
   cancelOrder(orderId: number): Observable<string> {
     return this.http.put(`${this.apiUrl}/cancel-order`, null, {

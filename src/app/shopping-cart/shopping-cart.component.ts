@@ -27,12 +27,13 @@ export class ShoppingCartComponent implements OnInit {
   loadCartItems(): void {
     this.shoppingCartService.getCartItems(this.customerId).subscribe(
       items => {
-        this.cartItems = items;
-        this.quantities = items.map(item => item.quantity); // Initialize quantities array based on cart items
+        this.cartItems = items || [];  // Fallback to empty array if items are null or undefined
+        this.quantities = this.cartItems.map(item => item.quantity); // Initialize quantities array based on cart items
         this.calculateTotalAmount();
       },
       error => {
         console.error('Error loading cart items:', error);
+        this.cartItems = [];  // Ensure cartItems is at least an empty array on error
       }
     );
   }
@@ -99,14 +100,21 @@ export class ShoppingCartComponent implements OnInit {
     );
 }
 
-  deleteItem(index: number): void {
-    const productId = this.cartItems[index].productID;
-    this.shoppingCartService.deleteFromCart(this.customerId, productId).subscribe(() => {
-      this.cartItems.splice(index, 1);
-      this.quantities.splice(index, 1);
-      this.calculateTotalAmount();
-    });
-  }
+deleteItem(index: number): void {
+  const productId = this.cartItems[index].productID || this.cartItems[index].productId;
+  
+  this.shoppingCartService.deleteFromCart(this.customerId, productId).subscribe(
+      (response: any) => {
+          console.log('Item deleted successfully:', response);
+          this.cartItems.splice(index, 1);
+          this.quantities.splice(index, 1);
+          this.calculateTotalAmount();
+      },
+      (error: HttpErrorResponse) => {
+          console.error('Error deleting item from cart:', error.message);
+      }
+  );
+}
 
 
   submitOrder(): void {

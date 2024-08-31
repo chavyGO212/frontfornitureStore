@@ -18,15 +18,22 @@ export class OrdersComponent implements OnInit {
     this.user = JSON.parse(localStorage.getItem('user') || '{}');
     this.fetchOrders();
   }
-
+  
   fetchOrders() {
     const isAdmin = this.user.permissionType === 'admin';
     this.ordersService.getUserOrders(this.user.id, isAdmin).subscribe(
-      (data: any[]) => this.orders = data,
+      (data: any[]) => {
+        this.orders = data;
+        this.orders.forEach(order => {
+          console.log('Order:', order); // Check that 'delivery' is present here
+        });
+      },
       (error: any) => console.error('Failed to fetch orders', error)
     );
-  }
+}
 
+  
+  
   viewOrderItems(orderId: number) {
     this.router.navigate(['/order-items'], { queryParams: { orderId } });
   }
@@ -41,10 +48,16 @@ export class OrdersComponent implements OnInit {
     const newAddress = prompt("Enter new address:");
     if (newAddress) {
       this.ordersService.updateOrderAddress(orderId, newAddress, this.user.id).subscribe(
-        () => this.fetchOrders()
+        () => {
+          console.log("Address updated successfully.");
+          window.location.reload(); // Reload the page after the address is updated
+        },
+        error => console.error("Failed to update address", error)
       );
     }
   }
+  
+  
 
   confirmCancelOrder(orderId: number, event: Event) {
     event.stopPropagation();

@@ -9,7 +9,6 @@
                 <th>מחיר ליחידה</th>
                 <th>הנחה</th>
                 <th>סה"כ</th>
-                <th>מחק</th>
             </tr>
         </thead>
         <tbody>
@@ -21,16 +20,10 @@
                         {{ quantities[i] }}
                         <button (click)="updateQuantity(i, quantities[i] + 1)">+</button>
                     </td>
-                    
                     <td>{{ item.color }}</td>
                     <td>{{ item.price || 0 }}</td>
                     <td>{{ item.promotion }}%</td>
-                    <td>
-                        {{ calculateTotalForItem(item, quantities[i]) }}
-                    </td>
-                    <td>
-                        <button (click)="deleteItem(i)">מחק</button>
-                    </td>
+                    <td>{{ calculateTotalForItem(item, quantities[i]) }}</td>
                 </tr>
             </ng-container>
             <ng-template #noItems>

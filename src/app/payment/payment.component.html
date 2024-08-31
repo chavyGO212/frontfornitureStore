@@ -10,49 +10,58 @@
     <form class="payment-form" (ngSubmit)="onSubmit()" #paymentForm="ngForm">
         <div class="form-group">
             <label for="cardholderId">ת.ז. המשלם:</label>
-            <input type="text" id="cardholderId" name="cardholderId" [(ngModel)]="paymentData.cardholderId" required>
+            <input type="text" id="cardholderId" name="cardholderId" [(ngModel)]="paymentData.cardholderId" required pattern="^[0-9]{1,9}$">
             <div *ngIf="paymentForm.submitted && !paymentForm.form.controls['cardholderId'].valid">
-                <span class="error">This field is required</span>
+                <span class="error">ID must be a number with up to 9 digits</span>
             </div>
         </div>
 
         <div class="form-group">
             <label for="cardholderFirstName">שם בעל הכרטיס:</label>
-            <input type="text" id="cardholderFirstName" name="cardholderFirstName" [(ngModel)]="paymentData.cardholderFirstName" required>
+            <input type="text" id="cardholderFirstName" name="cardholderFirstName" [(ngModel)]="paymentData.cardholderFirstName" required pattern="^[a-zA-Z\u0590-\u05FF ]+$">
             <div *ngIf="paymentForm.submitted && !paymentForm.form.controls['cardholderFirstName'].valid">
-                <span class="error">This field is required</span>
+                <span class="error">Name must contain only letters</span>
             </div>
         </div>
 
         <div class="form-group">
             <label for="cardholderLastName">שם משפחה בעל הכרטיס:</label>
-            <input type="text" id="cardholderLastName" name="cardholderLastName" [(ngModel)]="paymentData.cardholderLastName" required>
+            <input type="text" id="cardholderLastName" name="cardholderLastName" [(ngModel)]="paymentData.cardholderLastName" required pattern="^[a-zA-Z\u0590-\u05FF ]+$">
             <div *ngIf="paymentForm.submitted && !paymentForm.form.controls['cardholderLastName'].valid">
-                <span class="error">This field is required</span>
+                <span class="error">Last name must contain only letters</span>
             </div>
         </div>
 
         <div class="form-group">
             <label for="creditCardNumber">מספר כרטיס אשראי:</label>
-            <input type="text" id="creditCardNumber" name="creditCardNumber" [(ngModel)]="paymentData.creditCardNumber" required>
+            <input type="text" id="creditCardNumber" name="creditCardNumber" [(ngModel)]="paymentData.creditCardNumber" required pattern="^[0-9]{16}$">
             <div *ngIf="paymentForm.submitted && !paymentForm.form.controls['creditCardNumber'].valid">
-                <span class="error">This field is required</span>
+                <span class="error">Credit card number must be 16 digits</span>
             </div>
         </div>
 
         <div class="form-group">
-            <label for="creditCardExpDate">תוקף (MM/YY):</label>
-            <input type="text" id="creditCardExpDate" name="creditCardExpDate" [(ngModel)]="paymentData.creditCardExpDate" required>
-            <div *ngIf="paymentForm.submitted && !paymentForm.form.controls['creditCardExpDate'].valid">
-                <span class="error">This field is required</span>
+            <label for="creditCardExpDate">תוקף:</label>
+            <div class="expiration-date">
+                <select [(ngModel)]="paymentData.expMonth" name="expMonth" required>
+                    <option value="" disabled>Month</option>
+                    <option *ngFor="let month of months" [value]="month">{{ month }}</option>
+                </select>
+                <select [(ngModel)]="paymentData.expYear" name="expYear" required>
+                    <option value="" disabled>Year</option>
+                    <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+                </select>
+            </div>
+            <div *ngIf="paymentForm.submitted && (!paymentData.expMonth || !paymentData.expYear)">
+                <span class="error">Please select a valid expiration date</span>
             </div>
         </div>
 
         <div class="form-group">
             <label for="cvv">CVV:</label>
-            <input type="text" id="cvv" name="cvv" [(ngModel)]="paymentData.cvv" required>
+            <input type="text" id="cvv" name="cvv" [(ngModel)]="paymentData.cvv" required pattern="^[0-9]{3}$">
             <div *ngIf="paymentForm.submitted && !paymentForm.form.controls['cvv'].valid">
-                <span class="error">This field is required</span>
+                <span class="error">CVV must be 3 digits</span>
             </div>
         </div>
 

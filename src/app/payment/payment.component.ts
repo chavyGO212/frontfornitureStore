@@ -17,9 +17,13 @@ export class PaymentComponent implements OnInit {
     cardholderFirstName: '',
     cardholderLastName: '',
     creditCardNumber: '',
-    creditCardExpDate: '',
+    expMonth: '',
+    expYear: '',
     cvv: ''
   };
+
+  months: string[] = [];
+  years: number[] = [];
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {}
 
@@ -30,11 +34,25 @@ export class PaymentComponent implements OnInit {
     });
 
     this.user = JSON.parse(localStorage.getItem('user') || '{}');
+
+    this.populateMonths();
+    this.populateYears();
+  }
+
+  populateMonths(): void {
+    this.months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
+  }
+
+  populateYears(): void {
+    const currentYear = new Date().getFullYear();
+    for (let i = currentYear; i <= currentYear + 20; i++) {
+      this.years.push(i);
+    }
   }
 
   onSubmit() {
     // Check if all fields are filled
-    if (!this.paymentData.cardholderId || !this.paymentData.cardholderFirstName || !this.paymentData.cardholderLastName || !this.paymentData.creditCardNumber || !this.paymentData.creditCardExpDate || !this.paymentData.cvv) {
+    if (!this.paymentData.cardholderId || !this.paymentData.cardholderFirstName || !this.paymentData.cardholderLastName || !this.paymentData.creditCardNumber || !this.paymentData.expMonth || !this.paymentData.expYear || !this.paymentData.cvv) {
       return;
     }
 
@@ -43,7 +61,8 @@ export class PaymentComponent implements OnInit {
       orderId: this.orderId,
       amount: this.amount,
       userId: this.user.id,
-      ...this.paymentData
+      ...this.paymentData,
+      creditCardExpDate: `${this.paymentData.expMonth}/${this.paymentData.expYear.toString().slice(-2)}`
     };
 
     // Print the payment request to the console

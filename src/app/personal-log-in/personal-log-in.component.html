@@ -20,6 +20,8 @@
             <button routerLink="/stock" *ngIf="user.permissionType === 'admin'">טיפול במלאי</button><br>
             <button routerLink="/manage-clients" *ngIf="user.permissionType === 'admin'">פרטי לקוחות רשומים</button><br>
             <button routerLink="/manage-shoping-cart" *ngIf="user.permissionType === 'admin'">דוח ניהול סלי קניות</button>
+            <button routerLink="/color" *ngIf="user.permissionType === 'admin'">ניהול צבעים</button><br>
+            <button routerLink="/promotion" *ngIf="user.permissionType === 'admin'">ניהול הנחות</button>
         </section>
     </div>
 </body>

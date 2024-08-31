@@ -13,7 +13,7 @@
             <button routerLink="/update-p-d">עדכון פרטים אישיים</button><br>
             
             <!-- New button to navigate to orders -->
-            <button routerLink="/orders">הזמנות שלי</button><br>
+            <button routerLink="/orders"  *ngIf="user.permissionType === 'user'">הזמנות שלי</button><br>
             
             <!-- Admin-specific buttons -->
             <button routerLink="/orders" *ngIf="user.permissionType === 'admin'">טיפול בהזמנות לקוחות</button><br>

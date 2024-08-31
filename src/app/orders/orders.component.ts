@@ -20,7 +20,8 @@ export class OrdersComponent implements OnInit {
   }
 
   fetchOrders() {
-    this.ordersService.getUserOrders(this.user.id).subscribe(
+    const isAdmin = this.user.permissionType === 'admin';
+    this.ordersService.getUserOrders(this.user.id, isAdmin).subscribe(
       (data: any[]) => this.orders = data,
       (error: any) => console.error('Failed to fetch orders', error)
     );
@@ -53,8 +54,34 @@ export class OrdersComponent implements OnInit {
   }
 
   cancelOrder(orderId: number) {
-    this.ordersService.cancelOrder(orderId).subscribe(
-      () => this.fetchOrders()
-    );
+    this.ordersService.cancelOrder(orderId).subscribe({
+      next: () => {
+        console.log('Order successfully canceled.');
+        this.fetchOrders(); // Reload the orders list after cancellation
+      },
+      error: error => {
+        console.error('Failed to cancel the order', error);
+      }
+    });
+  }
+
+
+  completeOrder(orderId: number, event: Event) {
+    event.stopPropagation();
+  
+    // Check if the user has admin permissions
+    if (this.user.permissionType === 'admin') {
+      this.ordersService.completeOrder(orderId, this.user.id, { responseType: 'text' }).subscribe({
+        next: () => {
+          console.log('Order successfully completed.');
+          this.fetchOrders(); // Reload the orders list after completion
+        },
+        error: error => {
+          console.error('Failed to complete the order', error);
+        }
+      });
+    } else {
+      alert("You don't have permission to complete this order.");
+    }
   }
 }

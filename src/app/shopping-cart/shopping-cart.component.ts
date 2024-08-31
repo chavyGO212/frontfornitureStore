@@ -13,27 +13,27 @@ export class ShoppingCartComponent implements OnInit {
   quantities: number[] = [];
   totalAmount: number = 0;
   customerId: number;
-  deliveryOption: string = 'pickup'; // Default to pickup
-  deliveryFee: number = 100; // Delivery fee
+  deliveryOption: string = 'pickup'; 
+  deliveryFee: number = 100; 
 
   constructor(private shoppingCartService: ShoppingCartService, private router: Router) {}
 
   ngOnInit(): void {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
-    this.customerId = user.id; // Retrieve the logged-in user's ID from localStorage
+    this.customerId = user.id; 
     this.loadCartItems();
   }
 
   loadCartItems(): void {
     this.shoppingCartService.getCartItems(this.customerId).subscribe(
       items => {
-        this.cartItems = items || [];  // Fallback to empty array if items are null or undefined
-        this.quantities = this.cartItems.map(item => item.quantity); // Initialize quantities array based on cart items
+        this.cartItems = items || []; 
+        this.quantities = this.cartItems.map(item => item.quantity); 
         this.calculateTotalAmount();
       },
       error => {
         console.error('Error loading cart items:', error);
-        this.cartItems = [];  // Ensure cartItems is at least an empty array on error
+        this.cartItems = [];  
       }
     );
   }
@@ -46,13 +46,13 @@ export class ShoppingCartComponent implements OnInit {
     let total = this.cartItems.reduce((acc, item, index) => {
         const price = item.price || 0;
         const promotion = item.promotion || 0;
-        const quantity = this.quantities[index] || 1;  // Use the updated quantity
+        const quantity = this.quantities[index] || 1;  
         const itemTotal = quantity * price * ((100 - promotion) / 100);
         return acc + itemTotal;
     }, 0);
 
     if (this.deliveryOption === 'delivery') {
-        total += this.deliveryFee; // Adding delivery charge if delivery is selected
+        total += this.deliveryFee; 
     }
 
     this.totalAmount = total;
@@ -88,7 +88,7 @@ export class ShoppingCartComponent implements OnInit {
             } else {
                 this.quantities[index] = newQuantity;
             }
-            this.calculateTotalAmount();  // Ensure the total is recalculated after updating the quantity
+            this.calculateTotalAmount();  
         },
         (error: HttpErrorResponse) => {
             console.error('Error updating quantity:', error.message);
@@ -138,11 +138,11 @@ deleteItem(index: number): void {
             console.log('Order submitted successfully');
             console.log('Order Response:', response);
 
-            // Clear the shopping cart after order submission
+            
             this.shoppingCartService.clearCart(this.customerId).subscribe(() => {
                 console.log('Shopping cart cleared');
 
-                // Redirect to the payment page with orderId and amount as query parameters
+                
                 this.router.navigate(['/payment'], { 
                     queryParams: { 
                         orderId: response.orderId, 
@@ -151,12 +151,12 @@ deleteItem(index: number): void {
                 });
             }, (error: HttpErrorResponse) => {
                 console.error('Error clearing cart:', error.message);
-                // Optional: Handle cart clearing error, maybe inform the user or retry
+                
             });
         },
         (error: HttpErrorResponse) => {
             console.error('Error submitting order:', error.message);
-            // Optional: Handle order submission error, maybe inform the user or retry
+           
         }
     );
 }

@@ -6,7 +6,7 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: #f0f0f0; /* Light background for better contrast */
+  background-color: #f0f0f0; 
 }
 
 .container {
@@ -16,30 +16,30 @@ body {
   border-radius: 10px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 800px; /* Increased width for more space */
+  max-width: 800px; 
   direction: rtl;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 20px auto; /* Adds some vertical spacing */
+  margin: 20px auto; 
 }
 
 .promotion-table {
-  width: 100%; /* Full width of the container */
+  width: 100%; 
   margin-bottom: 20px;
-  border-collapse: collapse; /* Collapses borders for a clean look */
+  border-collapse: collapse; 
 }
 
 .promotion-table th, .promotion-table td {
-  border: 1px solid #241d1d; /* Border color for table cells */
+  border: 1px solid #241d1d; 
   padding: 10px;
   text-align: center;
 }
 
 .promotion-table th {
-  background-color: #e9e9e9; /* Subtle background for header */
+  background-color: #e9e9e9; 
   font-weight: bold;
 }
 
@@ -48,14 +48,14 @@ button {
   padding: 8px 15px;
   border: none;
   border-radius: 5px;
-  background-color: #4caf50; /* Primary button color */
+  background-color: #4caf50; 
   color: white;
   cursor: pointer;
   font-size: 14px;
 }
 
 button:hover {
-  background-color: #45a049; /* Darker shade on hover */
+  background-color: #45a049; 
 }
 
 .account-form {
@@ -88,5 +88,5 @@ button:hover {
 }
 
 .account-form button:hover {
-  background-color: #c77856; /* Slightly darker on hover */
+  background-color: #c77856; 
 }

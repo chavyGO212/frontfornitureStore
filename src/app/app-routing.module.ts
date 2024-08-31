@@ -39,10 +39,10 @@ const routes: Routes = [
   { path: "manage-shoping-cart", component: ManageShopingCartComponent },
   { path: "order-items", component: OrderItemsComponent },
   
-  // Redirect root path to orders or home as needed
+  
   { path: '', redirectTo: '/orders', pathMatch: 'full' },
 
-  // Wildcard route for a 404 page
+  
   { path: '**', redirectTo: '/orders' } 
 ];
 

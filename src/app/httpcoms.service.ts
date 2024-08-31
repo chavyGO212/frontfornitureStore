@@ -13,9 +13,7 @@ export class HttpcomsService {
     return this.http.get('https://dummy.restapiexample.com/api/v1/employees/');
   }
 
-  // getDataById( id: string ): Observable<any> {
-    
-  // }
+
 
   postData() {}
 

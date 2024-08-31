@@ -7,15 +7,13 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class RegistrationService {
-  // getCustomerDetails(arg0: number) {
-  //   throw new Error('Method not implemented.');
-  // }
+
   private apiUrl = 'http://localhost:9090/api/register';
 
   constructor(private http: HttpClient) {}
 
   register(user: any): Observable<any> {
-    console.log('Sending registration data to server:', user);  // Log the data being sent
+    console.log('Sending registration data to server:', user);
     return this.http.post(this.apiUrl, user);
   }
 

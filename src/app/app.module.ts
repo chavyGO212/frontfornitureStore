@@ -36,9 +36,9 @@ import { ManageOrdersComponent } from './manage-orders/manage-orders.component';
 
 
 const routes: Routes = [
-  { path: 'color', component: ColorComponent }, // Route to   ColorComponent
+  { path: 'color', component: ColorComponent }, 
   { path: '', redirectTo: '/color', pathMatch: 'full' },
-  {path:'log-in',component:LogInComponent}, // Optional: Redirect to 'color' as default
+  {path:'log-in',component:LogInComponent}, 
   {path:'promotion', component: PromotionComponent},
   { path: 'orders', component: OrdersComponent },
   { path: 'payment', component: PaymentComponent },

@@ -1,4 +1,4 @@
-/* Container styling */
+
 .container {
     max-width: 800px;
     margin: 40px auto;
@@ -9,20 +9,20 @@
     text-align: center;
 }
 
-/* Header styling */
+
 h1 {
     font-size: 28px;
     color: #2c3e50;
     margin-bottom: 40px;
 }
 
-/* Table container styling */
+
 .table-container {
     overflow-x: auto;
     margin: 20px 0;
 }
 
-/* Table styling */
+
 .order-table {
     width: 100%;
     border: 1px solid #ddd;
@@ -50,7 +50,7 @@ h1 {
     background-color: #ecf0f1;
 }
 
-/* Button container styling */
+
 .button-container {
     text-align: center;
     margin-top: 30px;
@@ -71,7 +71,7 @@ button:hover {
     background-color: #c0392b;
 }
 
-/* Back button styling */
+
 .back-button {
     margin-top: 30px;
     display: block;

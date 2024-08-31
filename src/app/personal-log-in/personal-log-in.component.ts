@@ -12,12 +12,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./personal-log-in.component.css']
 })
 export class PersonalLogInComponent implements OnInit  {
-  user: any; // User details object
+  user: any; 
 
   constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
-    // Retrieve user data from localStorage
+   
     this.user = JSON.parse(localStorage.getItem('user') || '{}');
     if (!this.user) {
       this.router.navigate(['/log-in']);
@@ -25,8 +25,8 @@ export class PersonalLogInComponent implements OnInit  {
   }
 
   logout(): void {
-    this.authService.userlogout(); // Call the logout method in AuthService
-    this.router.navigate(['/log-in']); // Navigate to the login page after logging out
+    this.authService.userlogout(); 
+    this.router.navigate(['/log-in']); 
   }
 }
 

@@ -6,7 +6,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #f8f8f8; /* Optional: Adds a light background color */
+    background-color: #f8f8f8; 
 }
 
 .container {
@@ -19,9 +19,9 @@ body {
     max-width: 600px;
     direction: rtl;
     text-align: right;
-    margin: auto; /* Center horizontally */
+    margin: auto; 
     display: flex;
-    flex-direction: column; /* Align content vertically */
+    flex-direction: column; 
     align-items: center;
 }
 

@@ -16,7 +16,7 @@
         <td>{{ order.orderId }}</td>
         <td>{{ order.address }}</td>
         <td>{{ order.totalPrice }}</td>
-        <td>{{ order.delivery ? 'Yes' : 'No' }}</td> <!-- Display delivery status -->
+        <td>{{ order.delivery ? 'Yes' : 'No' }}</td> 
         <td>{{ order.status }}</td>
         <td>
             <button *ngIf="order.status === 'UNPAID'" (click)="goToPayment(order, $event)" class="action-button pay-button">Pay</button>

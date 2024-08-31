@@ -25,7 +25,7 @@ export class OrdersComponent implements OnInit {
       (data: any[]) => {
         this.orders = data;
         this.orders.forEach(order => {
-          console.log('Order:', order); // Check that 'delivery' is present here
+          console.log('Order:', order); 
         });
       },
       (error: any) => console.error('Failed to fetch orders', error)
@@ -50,7 +50,7 @@ export class OrdersComponent implements OnInit {
       this.ordersService.updateOrderAddress(orderId, newAddress, this.user.id).subscribe(
         () => {
           console.log("Address updated successfully.");
-          window.location.reload(); // Reload the page after the address is updated
+          window.location.reload(); 
         },
         error => console.error("Failed to update address", error)
       );
@@ -70,7 +70,7 @@ export class OrdersComponent implements OnInit {
     this.ordersService.cancelOrder(orderId).subscribe({
       next: () => {
         console.log('Order successfully canceled.');
-        this.fetchOrders(); // Reload the orders list after cancellation
+        this.fetchOrders(); 
       },
       error: error => {
         console.error('Failed to cancel the order', error);
@@ -82,12 +82,12 @@ export class OrdersComponent implements OnInit {
   completeOrder(orderId: number, event: Event) {
     event.stopPropagation();
   
-    // Check if the user has admin permissions
+ 
     if (this.user.permissionType === 'admin') {
       this.ordersService.completeOrder(orderId, this.user.id, { responseType: 'text' }).subscribe({
         next: () => {
           console.log('Order successfully completed.');
-          this.fetchOrders(); // Reload the orders list after completion
+          this.fetchOrders(); 
         },
         error: error => {
           console.error('Failed to complete the order', error);

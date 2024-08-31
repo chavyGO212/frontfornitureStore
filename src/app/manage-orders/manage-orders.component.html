@@ -17,10 +17,6 @@
           <td>{{ order.totalPrice }}</td>
           <td>{{ order.status }}</td>
           <td>
-            <!-- <button *ngIf="order.status === 'UNPAID'" (click)="goToPayment(order, $event)" class="action-button pay-button">Pay</button>
-            <button *ngIf="order.delivery && order.status === 'UNPAID'" (click)="updateAddress(order.orderId, $event)" class="action-button update-button">Update Address</button>
-            <button *ngIf="order.status === 'UNPAID'" (click)="confirmCancelOrder(order.orderId, $event)" class="action-button cancel-button">Cancel</button>
-          </td> -->
         </tr>
       </tbody>
     </table>

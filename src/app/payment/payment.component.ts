@@ -51,12 +51,12 @@ export class PaymentComponent implements OnInit {
   }
 
   onSubmit() {
-    // Check if all fields are filled
+   
     if (!this.paymentData.cardholderId || !this.paymentData.cardholderFirstName || !this.paymentData.cardholderLastName || !this.paymentData.creditCardNumber || !this.paymentData.expMonth || !this.paymentData.expYear || !this.paymentData.cvv) {
       return;
     }
 
-    // Construct the payment request object
+   
     const paymentRequest = {
       orderId: this.orderId,
       amount: this.amount,
@@ -65,14 +65,13 @@ export class PaymentComponent implements OnInit {
       creditCardExpDate: `${this.paymentData.expMonth}/${this.paymentData.expYear.toString().slice(-2)}`
     };
 
-    // Print the payment request to the console
     console.log('Sending payment request:', paymentRequest);
 
-    // Send the HTTP POST request to the correct URL
+   
     this.http.post('http://localhost:9090/api/payments/process', paymentRequest, { observe: 'response' }).subscribe({
       next: (response: any) => {
         console.log('Payment successful', response);
-        // Navigate to the orders page after successful payment
+        
         this.router.navigate(['/orders']);
       },
       error: (error: HttpErrorResponse) => {

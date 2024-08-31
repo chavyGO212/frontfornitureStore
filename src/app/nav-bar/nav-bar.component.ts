@@ -13,14 +13,14 @@ export class NavBarComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
-    // Subscribe to the user observable to get updates on login state
+
     this.authService.user.subscribe(user => {
-      this.loggedIn = !!user; // Set loggedIn to true if user is not null
+      this.loggedIn = !!user; 
     });
   }
 
   logout(): void {
-    this.authService.logout(); // Call the logout method in AuthService
-    this.router.navigate(['/log-in']); // Navigate to the login page after logging out
+    this.authService.logout(); 
+    this.router.navigate(['/log-in']); 
   }
 }

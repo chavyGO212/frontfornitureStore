@@ -1,10 +1,10 @@
 <div class="container">
     <h2>ניהול קטלוג</h2>
 
-    <!-- Search field for filtering the table -->
+    
     <input type="text" placeholder="חפש לפי שם מוצר..." [(ngModel)]="searchTerm" (input)="filterStockList()">
 
-    <!-- Form for adding/updating catalog items -->
+    
     <h3>{{ editMode ? 'עריכת פריט' : 'הוספת פריט חדש' }}</h3>
     <form [formGroup]="addStockForm" (ngSubmit)="onSubmit()">
         <label for="productName">שם מוצר</label>
@@ -48,7 +48,7 @@
         <button type="submit">{{ editMode ? 'עדכן פריט' : 'הוסף פריט' }}</button>
     </form>
 
-    <!-- Table to display the stock items -->
+   
     <h3>רשימת קטלוג</h3>
     <table *ngIf="filteredStockList.length > 0; else noStockItems" class="stock-table">
         <thead>

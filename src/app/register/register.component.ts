@@ -33,11 +33,11 @@ export class RegisterComponent  {
     console.log(this.registrationForm.value);
   
   }
-  // פונקציה להירשם שתבוצע בלחיצה על הכפתור
+  
   register() {
     console.log('Attempting to register customer with data:', this.registrationForm.value);
     if (this.registrationForm.valid) {
-        console.log('Form data being sent:', this.registrationForm.value); // Additional log before the HTTP request
+        console.log('Form data being sent:', this.registrationForm.value); 
         this.subscription.add(this.registerService.register(this.registrationForm.value).subscribe(
             response => {
                 this.registrationForm = response;

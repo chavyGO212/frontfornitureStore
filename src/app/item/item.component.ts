@@ -53,7 +53,7 @@ export class ItemComponent implements OnInit {
   
   addToCart(product: any) { 
     const user = JSON.parse(localStorage.getItem('user') || '{}');
-    const customerId = user.id; // Retrieve the logged-in user's ID from localStorage
+    const customerId = user.id; 
     
     const productId = product.productID;
     const quantity = this.quantity;
